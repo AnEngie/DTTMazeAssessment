@@ -9,7 +9,9 @@ public class MazeBlock : MonoBehaviour
     public void MakePath()
     {
         IsPath = true;
-        var visible = gameObject.GetComponent<MeshRenderer>();
-        visible.enabled = false;
+        gameObject.SetActive(false);
+
+        // var visible = gameObject.GetComponent<MeshRenderer>();
+        // visible.enabled = false;
     }
 }

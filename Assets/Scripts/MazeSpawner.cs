@@ -9,42 +9,55 @@ public class MazeSpawner : MonoBehaviour
     [SerializeField]
     private int Columns = 2, Rows = 2;
 
+    [SerializeField]
+    private MazeSpawner mazeParent; // Needed to assign individual blocks under Maze parent class
+
     private MazeBlock[,] MazeGrid;
 
     void Start()
     {
         MazeGrid = new MazeBlock[Columns, Rows];
 
-        for (int i = 0; i < Columns; i++)
+        for (int i = 0; i < Columns; i++) // Generate grid size to its given size
         {
             for (int j = 0; j < Rows; j++)
             {
-                MazeGrid[i, j] = Instantiate(mazeBlock, new Vector3(i, 0, j), Quaternion.identity);
+                MazeGrid[i, j] = Instantiate(mazeBlock, new Vector3(i, 0, j), Quaternion.identity, mazeParent.transform);
             }
         }
 
-        StartCoroutine(GenerateMaze(MazeGrid[0, 0]));
+        StartCoroutine(GenerateMaze(MazeGrid[0, 0])); // Start generating paths in grid
     }
 
     private IEnumerator GenerateMaze(MazeBlock currentBlock)
     {
-        currentBlock.MakePath();
+        currentBlock.MakePath(); // Mark block as visited by algorithm
 
-        var nextBlock = GetNextMazeBlock(currentBlock);
+        MazeBlock nextBlock;
 
-        if (nextBlock != null)
+        do
         {
-            yield return GenerateMaze(nextBlock);
-        }
+            nextBlock = GetNextMazeBlock(currentBlock);
+
+            if (nextBlock != null)
+            {
+                yield return GenerateMaze(nextBlock);
+            }
+        } while (nextBlock != null); // Makes algorithm visit older blocks when path hits dead end
     }
 
     private MazeBlock GetNextMazeBlock(MazeBlock currentBlock)
     {
         List<MazeBlock> unvisitedNeighbours = GetUnvisitedNeighbours(currentBlock);
+        MazeBlock nextBlock = null;
 
-        var nextBlock = Random.Range(0, unvisitedNeighbours.Count);
+        if (unvisitedNeighbours.Count != 0) // Gets random neighbour from all available ones
+        {
+            var chosenBlock = Random.Range(0, unvisitedNeighbours.Count);
+            nextBlock = unvisitedNeighbours[chosenBlock];
+        }
 
-        return unvisitedNeighbours[nextBlock];
+        return nextBlock; // Returns null if block has no neighbours, otherwise returns the chosen block
     }
 
     private List<MazeBlock> GetUnvisitedNeighbours(MazeBlock currentBlock)
@@ -53,7 +66,7 @@ public class MazeSpawner : MonoBehaviour
         int z = (int)currentBlock.transform.position.z;
         List<MazeBlock> unvisitedNeighbours = new();
 
-        if (x + 1 < Columns)
+        if (x + 1 < Columns) // Check if coords are inside grid
         {
             var blockRight = MazeGrid[x + 1, z];
 
@@ -63,7 +76,7 @@ public class MazeSpawner : MonoBehaviour
             }
         }
 
-        if (x - 1 >= 0)
+        if (x - 1 >= 0) // Check if coords are inside grid
         {
             var blockLeft = MazeGrid[x - 1, z];
 
@@ -73,7 +86,7 @@ public class MazeSpawner : MonoBehaviour
             }
         }
 
-        if (z + 1 < Rows)
+        if (z + 1 < Rows) // Check if coords are inside grid
         {
             var blockUp = MazeGrid[x, z + 1];
 
@@ -83,7 +96,7 @@ public class MazeSpawner : MonoBehaviour
             }
         }
 
-        if (z - 1 >= 0)
+        if (z - 1 >= 0) // Check if coords are inside grid
         {
             var blockDown = MazeGrid[x, z - 1];
 
