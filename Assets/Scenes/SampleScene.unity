@@ -315,7 +315,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 10, z: 0}
+  m_LocalPosition: {x: 3.16, y: 10, z: 3.66}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -553,9 +553,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -1471834569313862082, guid: 293adee9537d2bf4ea79b8a8eabb791b,
         type: 3}
+      propertyPath: mazeBlock
+      value: 
+      objectReference: {fileID: 8482043284124098941, guid: e18c028629c152b4f92ae18a1ce659f6,
+        type: 3}
+    - target: {fileID: -1471834569313862082, guid: 293adee9537d2bf4ea79b8a8eabb791b,
+        type: 3}
       propertyPath: MazeParent
       value: 
       objectReference: {fileID: 1126398945}
+    - target: {fileID: -1471834569313862082, guid: 293adee9537d2bf4ea79b8a8eabb791b,
+        type: 3}
+      propertyPath: mazeBlockPrefab
+      value: 
+      objectReference: {fileID: 8482043284124098941, guid: e18c028629c152b4f92ae18a1ce659f6,
+        type: 3}
     - target: {fileID: 2289906495793543394, guid: 293adee9537d2bf4ea79b8a8eabb791b,
         type: 3}
       propertyPath: m_LocalPosition.x
