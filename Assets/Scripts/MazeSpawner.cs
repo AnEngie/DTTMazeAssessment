@@ -12,6 +12,9 @@ public class MazeSpawner : MonoBehaviour
     [SerializeField]
     private MazeSpawner mazeParent; // Needed to assign individual blocks under Maze parent class
 
+    [SerializeField]
+    private float mazeGenerationDelay = 0.05f;
+
     private MazeBlock[,] MazeGrid;
 
     void Start()
@@ -33,6 +36,8 @@ public class MazeSpawner : MonoBehaviour
     {
         currentBlock.MakePath(); // Mark block as visited by algorithm
 
+        yield return new WaitForSeconds(mazeGenerationDelay);
+         
         MazeBlock nextBlock;
 
         do
