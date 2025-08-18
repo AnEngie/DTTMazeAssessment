@@ -13,6 +13,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private Transform cameraOrientation;
 
+    [SerializeField]
+    private PlayerLook playerLook;
+
     Rigidbody rb;
 
     private float moveSpeed;
@@ -32,6 +35,20 @@ public class PlayerController : MonoBehaviour
         set
         {
             _isJumping = value;
+        }
+    }
+    
+    private bool _IsCursorVisible = false;
+
+    private bool IsCursorVisible
+    {
+        get
+        {
+            return _IsCursorVisible;
+        }
+        set
+        {
+            _IsCursorVisible = value;
         }
     }
 
@@ -64,11 +81,11 @@ public class PlayerController : MonoBehaviour
 
     public void OnRun(InputAction.CallbackContext context)
     {
-        if (context.started)
+        if (context.started && !IsCursorVisible)
         {
             moveSpeed = runSpeed;
         }
-        else if (context.canceled)
+        else if (context.canceled && !IsCursorVisible)
         {
             moveSpeed = walkSpeed;
         }
@@ -84,6 +101,30 @@ public class PlayerController : MonoBehaviour
         else if (context.canceled)
         {
             IsJumping = false;
+        }
+    }
+
+        public void OnMenu(InputAction.CallbackContext context)
+    {
+        if (IsCursorVisible)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+
+            playerLook.enabled = true;
+            moveSpeed = walkSpeed;
+
+            IsCursorVisible = false;
+        }
+        else if (!IsCursorVisible)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+
+            playerLook.enabled = false;
+            moveSpeed = 0;
+
+            IsCursorVisible = true;
         }
     }
 }

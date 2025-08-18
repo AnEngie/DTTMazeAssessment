@@ -1,10 +1,10 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI%20Toolkit/MazeUIStyle.uss?fileID=7433441132597879392&amp;guid=32843d5cd431b124f9dc153111879591&amp;type=3#MazeUIStyle" />
     <ui:VisualElement name="Container" style="flex-grow: 1; align-items: center; justify-content: center; align-self: flex-end;">
-        <ui:Button text="Generate Grid" parse-escape-sequences="true" display-tooltip-when-elided="true" name="GenerateGrid" class="button" />
-        <ui:Button text="Generate Maze" parse-escape-sequences="true" display-tooltip-when-elided="true" name="GenerateMaze" class="button" />
-        <ui:Button text="Destroy Grid" parse-escape-sequences="true" display-tooltip-when-elided="true" name="DestroyGrid" class="button" />
-        <ui:IntegerField label="Columns" value="42" name="GridColumns" class="inputField" />
-        <ui:IntegerField label="Rows" value="42" name="GridRows" class="inputField" />
+        <ui:Button text="Generate Grid" parse-escape-sequences="true" display-tooltip-when-elided="true" name="GenerateGrid" tabindex="-1" class="button" />
+        <ui:Button text="Generate Maze" parse-escape-sequences="true" display-tooltip-when-elided="true" name="GenerateMaze" tabindex="-1" class="button" />
+        <ui:Button text="Destroy Grid" parse-escape-sequences="true" display-tooltip-when-elided="true" name="DestroyGrid" tabindex="-1" class="button" />
+        <ui:IntegerField label="Columns" value="10" name="GridColumns" focusable="true" tabindex="-1" class="inputField" />
+        <ui:IntegerField label="Rows" value="10" name="GridRows" focusable="true" tabindex="-1" class="inputField" />
     </ui:VisualElement>
 </ui:UXML>

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
 
 public class MazeUiEvents : MonoBehaviour
@@ -14,7 +15,6 @@ public class MazeUiEvents : MonoBehaviour
     private IntegerField GridColumnsField;
     private IntegerField GridRowField;
 
-
     [SerializeField]
     private MazeSpawner mazeSpawner;
 
@@ -22,6 +22,14 @@ public class MazeUiEvents : MonoBehaviour
     {
         document = GetComponent<UIDocument>();
 
+        AssignButtons();
+
+        GenerateMazeButton.SetEnabled(false);
+        DestroyGridButton.SetEnabled(false);
+    }
+
+    private void AssignButtons()
+    {
         GenerateGridButton = document.rootVisualElement.Q("GenerateGrid") as Button;
         GenerateGridButton.RegisterCallback<ClickEvent>(OnGenerateGridClick);
 
@@ -35,17 +43,11 @@ public class MazeUiEvents : MonoBehaviour
         GridRowField = document.rootVisualElement.Q("GridRows") as IntegerField;
     }
 
-    void OnDisable()
-    {
-        GenerateGridButton.UnregisterCallback<ClickEvent>(OnGenerateGridClick);
-
-        GenerateMazeButton.UnregisterCallback<ClickEvent>(OnGenerateMazeClick);
-
-        DestroyGridButton.UnregisterCallback<ClickEvent>(OnDestroyGridClick);
-    }
-
     private void OnGenerateGridClick(ClickEvent evt)
     {
+        GenerateMazeButton.SetEnabled(true);
+        DestroyGridButton.SetEnabled(true);
+
         mazeSpawner.Columns = GridColumnsField.value;
         mazeSpawner.Rows = GridRowField.value;
         mazeSpawner.GenerateGrid();
@@ -57,9 +59,12 @@ public class MazeUiEvents : MonoBehaviour
         mazeSpawner.Rows = GridRowField.value;
         mazeSpawner.StartMazeGeneration();
     }
-    
+
     private void OnDestroyGridClick(ClickEvent evt)
     {
+        GenerateMazeButton.SetEnabled(false);
+        DestroyGridButton.SetEnabled(false);
+
         mazeSpawner.RemoveGrid();
     }
 }
