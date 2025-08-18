@@ -9,11 +9,16 @@ public class MazeSpawner : MonoBehaviour
     [SerializeField]
     private MazeSpawner mazeParent; // Needed to assign individual blocks under Maze parent class
 
+    [SerializeField]
+    private MazeUiEvents mazeUiEvents;
+
     public int Columns = 2, Rows = 2;
     private int OldColumns, OldRows;
 
     [SerializeField]
     private float mazeGenerationDelay = 0.05f;
+
+    private int progress = 0;
 
     private MazeBlock[,] MazeGrid;
 
@@ -75,6 +80,9 @@ public class MazeSpawner : MonoBehaviour
         }
 
         Debug.Log("Start Maze Generation");
+
+        mazeUiEvents.SetProgressBarMax(MazeGrid.Length);
+        progress = 0;
         StartCoroutine(GenerateMaze(null, MazeGrid[0, 0])); // Start generating paths in grid
         MazeGenerated = true;
     }
@@ -95,6 +103,9 @@ public class MazeSpawner : MonoBehaviour
 
             if (nextBlock != null)
             {
+                progress++;
+                mazeUiEvents.UpdateProgressBar(progress);
+                
                 yield return GenerateMaze(currentBlock, nextBlock);
             }
         } while (nextBlock != null); // Makes algorithm visit older blocks when path hits dead end

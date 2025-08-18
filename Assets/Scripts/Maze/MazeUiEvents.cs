@@ -15,6 +15,8 @@ public class MazeUiEvents : MonoBehaviour
     private IntegerField GridColumnsField;
     private IntegerField GridRowField;
 
+    private ProgressBar progressBar;
+
     [SerializeField]
     private MazeSpawner mazeSpawner;
 
@@ -22,13 +24,13 @@ public class MazeUiEvents : MonoBehaviour
     {
         document = GetComponent<UIDocument>();
 
-        AssignButtons();
+        AssignVisualElements();
 
         GenerateMazeButton.SetEnabled(false);
         DestroyGridButton.SetEnabled(false);
     }
 
-    private void AssignButtons()
+    private void AssignVisualElements()
     {
         GenerateGridButton = document.rootVisualElement.Q("GenerateGrid") as Button;
         GenerateGridButton.RegisterCallback<ClickEvent>(OnGenerateGridClick);
@@ -41,6 +43,8 @@ public class MazeUiEvents : MonoBehaviour
 
         GridColumnsField = document.rootVisualElement.Q("GridColumns") as IntegerField;
         GridRowField = document.rootVisualElement.Q("GridRows") as IntegerField;
+
+        progressBar = document.rootVisualElement.Q("MazeProgressBar") as ProgressBar;
     }
 
     private void OnGenerateGridClick(ClickEvent evt)
@@ -66,5 +70,14 @@ public class MazeUiEvents : MonoBehaviour
         DestroyGridButton.SetEnabled(false);
 
         mazeSpawner.RemoveGrid();
+    }
+
+    public void SetProgressBarMax(int maxValue)
+    {
+        progressBar.highValue = maxValue;
+    }
+    public void UpdateProgressBar(int progress)
+    {
+        progressBar.value = progress;
     }
 }
