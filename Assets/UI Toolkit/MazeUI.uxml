@@ -1,16 +1,18 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI%20Toolkit/MazeUIStyle.uss?fileID=7433441132597879392&amp;guid=32843d5cd431b124f9dc153111879591&amp;type=3#MazeUIStyle" />
+    <ui:VisualElement name="TopContainer" style="flex-grow: 1; justify-content: flex-start; align-self: auto;">
+        <ui:VisualElement style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Textures/TabToSwitch.png?fileID=2800000&amp;guid=fc8a3243996da534d88378e019d8baef&amp;type=3#TabToSwitch&quot;); align-items: stretch; -unity-background-scale-mode: scale-to-fit; align-self: flex-start; justify-content: flex-start; width: 208px; height: -112px; flex-direction: column; margin-left: 10px;" />
+    </ui:VisualElement>
     <ui:VisualElement name="Container" style="flex-grow: 1; align-items: center; justify-content: center; align-self: flex-end;">
         <ui:Button text="Generate Grid" parse-escape-sequences="true" display-tooltip-when-elided="true" name="GenerateGrid" tabindex="-1" class="button" />
+        <ui:IntegerField label="Columns" value="10" name="GridColumns" focusable="true" tabindex="-1" class="inputField" style="margin-top: 5px;" />
+        <ui:IntegerField label="Rows" value="10" name="GridRows" focusable="true" tabindex="-1" class="inputField" />
         <ui:Button text="Generate Maze" parse-escape-sequences="true" display-tooltip-when-elided="true" name="GenerateMaze" tabindex="-1" class="button" />
         <ui:Button text="Destroy Grid" parse-escape-sequences="true" display-tooltip-when-elided="true" name="DestroyGrid" tabindex="-1" class="button" />
-        <ui:IntegerField label="Columns" value="10" name="GridColumns" focusable="true" tabindex="-1" class="inputField" />
-        <ui:IntegerField label="Rows" value="10" name="GridRows" focusable="true" tabindex="-1" class="inputField" />
     </ui:VisualElement>
-    <ui:VisualElement name="BottomContainer" style="flex-grow: 1;">
-        <ui:VisualElement name="ProgressBarContainer" style="flex-grow: 1; align-items: flex-end; flex-direction: row; justify-content: center; align-self: auto;">
-            <ui:ProgressBar value="0" title="Generating Maze..." name="MazeProgressBar" style="width: 888px;" />
-            <ui:Label tabindex="-1" text="0%" parse-escape-sequences="true" display-tooltip-when-elided="true" name="MazeProgress" />
+    <ui:VisualElement name="BottomContainer" style="flex-grow: 1; justify-content: flex-start; align-self: auto; align-items: center; height: auto;">
+        <ui:VisualElement name="ProgressBarContainer" style="flex-grow: 1; align-items: flex-end; flex-direction: row; justify-content: center; align-self: auto; height: 1px;">
+            <ui:ProgressBar value="0" title="Generating Maze..." name="MazeProgressBar" style="width: 888px; margin-bottom: 25px; font-size: 18px;" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

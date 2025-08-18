@@ -81,7 +81,7 @@ public class MazeSpawner : MonoBehaviour
 
         Debug.Log("Start Maze Generation");
 
-        mazeUiEvents.SetProgressBarMax(MazeGrid.Length);
+        mazeUiEvents.ActiveProgressBar(MazeGrid.Length - 1);
         progress = 0;
         StartCoroutine(GenerateMaze(null, MazeGrid[0, 0])); // Start generating paths in grid
         MazeGenerated = true;
@@ -105,7 +105,7 @@ public class MazeSpawner : MonoBehaviour
             {
                 progress++;
                 mazeUiEvents.UpdateProgressBar(progress);
-                
+
                 yield return GenerateMaze(currentBlock, nextBlock);
             }
         } while (nextBlock != null); // Makes algorithm visit older blocks when path hits dead end

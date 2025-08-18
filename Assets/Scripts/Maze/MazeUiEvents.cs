@@ -28,6 +28,7 @@ public class MazeUiEvents : MonoBehaviour
 
         GenerateMazeButton.SetEnabled(false);
         DestroyGridButton.SetEnabled(false);
+        progressBar.visible = false;
     }
 
     private void AssignVisualElements()
@@ -72,12 +73,18 @@ public class MazeUiEvents : MonoBehaviour
         mazeSpawner.RemoveGrid();
     }
 
-    public void SetProgressBarMax(int maxValue)
+    public void ActiveProgressBar(int maxValue)
     {
         progressBar.highValue = maxValue;
+        progressBar.visible = true;
     }
     public void UpdateProgressBar(int progress)
     {
         progressBar.value = progress;
+
+        if (progressBar.value == progressBar.highValue)
+        {
+            progressBar.visible = false;
+        }
     }
 }
