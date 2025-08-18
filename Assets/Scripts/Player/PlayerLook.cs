@@ -7,13 +7,12 @@ public class PlayerLook : MonoBehaviour
     public float sensX;
     public float sensY;
 
-    public Transform orientation;
-
     float xRotation;
     float yRotation;
 
     void Start()
     {
+        // Lock cursor
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
@@ -26,9 +25,8 @@ public class PlayerLook : MonoBehaviour
         yRotation += mouseX;
 
         xRotation -= mouseY;
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+        xRotation = Mathf.Clamp(xRotation, -90f, 90f); // Stop player from turning their head upside down
 
         transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
-        orientation.rotation = Quaternion.Euler(xRotation, yRotation, 0);
     }
 }

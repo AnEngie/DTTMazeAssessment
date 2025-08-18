@@ -1,56 +1,39 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using UnityEngine.Scripting.APIUpdating;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
-    public float walkSpeed = 5f;
-    public float runSpeed = 8f;
-    public float moveSpeed;
-    public float movementX;
-    public float movementY;
-    public float movementZ;
+    [SerializeField]
+    private float walkSpeed = 5f;
 
-    public Transform orientation;
+    [SerializeField]
+    private float runSpeed = 8f;
+
+    [SerializeField]
+    private Transform cameraOrientation;
+
+    Rigidbody rb;
+
+    private float moveSpeed;
+
+    private float movementX, movementZ;
 
     Vector3 moveDirection;
 
-    [SerializeField]
-    private bool _isMoving = false;
+    private bool _isJumping = false;
 
-    public bool IsMoving
+    private bool IsJumping
     {
         get
         {
-            return _isMoving;
+            return _isJumping;
         }
         set
         {
-            _isMoving = value;
+            _isJumping = value;
         }
     }
-
-    [SerializeField]
-    private bool _isRunning = false;
-
-    public bool IsRunning
-    {
-        get
-        {
-            return _isRunning;
-        }
-        set
-        {
-            _isRunning = value;
-        }
-    }
-
-    Rigidbody rb;
 
     private void Awake()
     {
@@ -61,9 +44,16 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        moveDirection = orientation.forward * movementZ + orientation.right * movementX;
+        // Move based on direction player is looking
+        moveDirection = cameraOrientation.forward * movementZ + cameraOrientation.right * movementX;
 
         rb.AddForce(moveDirection.normalized * moveSpeed, ForceMode.Force);
+
+        // Movement on the Y axis
+        if (IsJumping)
+        {
+            rb.AddForce(transform.up * moveSpeed, ForceMode.Force);
+        }
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -76,13 +66,24 @@ public class PlayerController : MonoBehaviour
     {
         if (context.started)
         {
-            IsRunning = true;
             moveSpeed = runSpeed;
         }
         else if (context.canceled)
         {
-            IsRunning = false;
             moveSpeed = walkSpeed;
+        }
+    }
+
+    public void OnJump(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            IsJumping = true;
+            rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z); // reset Y velocity before moving up
+        }
+        else if (context.canceled)
+        {
+            IsJumping = false;
         }
     }
 }
