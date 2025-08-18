@@ -1,0 +1,23 @@
+.button {
+    font-size: 20px;
+    width: 220px;
+    height: 60px;
+    justify-content: flex-start;
+    align-self: center;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    background-color: rgb(207, 0, 0);
+    color: rgb(255, 255, 255);
+    -unity-font-style: bold;
+    margin-top: 50px;
+}
+
+.inputField {
+    justify-content: flex-start;
+    align-items: stretch;
+    background-color: rgb(207, 0, 0);
+    color: rgb(0, 0, 0);
+    font-size: 20px;
+}

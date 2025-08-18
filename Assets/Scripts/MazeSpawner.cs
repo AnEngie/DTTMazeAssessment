@@ -10,16 +10,26 @@ public class MazeSpawner : MonoBehaviour
     private MazeSpawner mazeParent; // Needed to assign individual blocks under Maze parent class
 
     public int Columns = 2, Rows = 2;
+    private int OldColumns, OldRows;
 
     [SerializeField]
     private float mazeGenerationDelay = 0.05f;
 
     private MazeBlock[,] MazeGrid;
 
+    private bool MazeGenerated = false;
+    private bool GridGenerated = false;
 
-    void Start()
+    public void GenerateGrid()
     {
-        MazeGrid = new MazeBlock[Columns, Rows];
+        Debug.Log("Start Grid Generation");
+
+        if (GridGenerated)
+        {
+            RemoveGrid();
+        }
+
+        MazeGrid ??= new MazeBlock[Columns, Rows];
 
         for (int i = 0; i < Columns; i++) // Generate grid size to its given size
         {
@@ -29,7 +39,44 @@ public class MazeSpawner : MonoBehaviour
             }
         }
 
+        OldColumns = Columns;
+        OldRows = Rows;
+        GridGenerated = true;
+    }
+
+    public void RemoveGrid()
+    {
+        Debug.Log("Remove Grid");
+
+        for (int i = 0; i < OldColumns; i++) // Generate grid size to its given size
+        {
+            for (int j = 0; j < OldRows; j++)
+            {
+                Destroy(MazeGrid[i, j].gameObject);
+            }
+        }
+
+        MazeGrid = null;
+        MazeGenerated = false;
+        GridGenerated = false;
+    }
+
+    public void StartMazeGeneration()
+    {
+        if (MazeGenerated)
+        {
+            RemoveGrid();
+            GenerateGrid();
+        }
+
+        if (!GridGenerated)
+        {
+            GenerateGrid();
+        }
+
+        Debug.Log("Start Maze Generation");
         StartCoroutine(GenerateMaze(null, MazeGrid[0, 0])); // Start generating paths in grid
+        MazeGenerated = true;
     }
 
     private IEnumerator GenerateMaze(MazeBlock previousBlock, MazeBlock currentBlock)
