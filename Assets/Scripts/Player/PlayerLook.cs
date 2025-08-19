@@ -1,14 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerLook : MonoBehaviour
 {
-    public float sensX;
-    public float sensY;
+    [SerializeField]
+    private float sensX;
 
-    float xRotation;
-    float yRotation;
+    [SerializeField]
+    private float sensY;
+
+
+    private float xRotation;
+    private float yRotation;
 
     void Start()
     {
@@ -27,5 +29,24 @@ public class PlayerLook : MonoBehaviour
         xRotation = Mathf.Clamp(xRotation, -90f, 90f); // Stop player from turning their head upside down
 
         transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
+    }
+
+    public void OnMenu()
+    {
+        // Locking/Unlocking the cursor and enabling/disabling camera following mouse
+
+        enabled = !enabled;
+
+        if (enabled)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
+
+        Cursor.visible = !Cursor.visible;
+
     }
 }

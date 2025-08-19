@@ -1,28 +1,30 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Callbacks;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
 
-public class MazeUiEvents : MonoBehaviour
+public class MazeUIEvents : MonoBehaviour
 {
-    private UIDocument document;
-
-    private Button GenerateGridButton;
-    private Button GenerateMazeButton;
-    private Button DestroyGridButton;
-    private Button SwitchWalkingButton;
-
-    private IntegerField GridColumnsField;
-    private IntegerField GridRowField;
-
-    private ProgressBar progressBar;
-
     [SerializeField]
     private MazeSpawner mazeSpawner;
 
-    public Rigidbody rigidBody;
+
+    [Header("Events")]
+    public GameEvent onSwitchFlight;
+
+    
+    private UIDocument document;
+
+    // Buttons
+    private Button GenerateGridButton;
+    private Button GenerateMazeButton;
+    private Button DestroyGridButton;
+    private Button SwitchFlightButton;
+
+    // InputFields
+    private IntegerField GridColumnsField;
+    private IntegerField GridRowField;
+
+    // Progressbar
+    private ProgressBar progressBar;
 
     void Awake()
     {
@@ -46,8 +48,8 @@ public class MazeUiEvents : MonoBehaviour
         DestroyGridButton = document.rootVisualElement.Q("DestroyGrid") as Button;
         DestroyGridButton.RegisterCallback<ClickEvent>(OnDestroyGridClick);
 
-        SwitchWalkingButton = document.rootVisualElement.Q("SwitchWalking") as Button;
-        SwitchWalkingButton.RegisterCallback<ClickEvent>(OnSwitchWalkingClick);
+        SwitchFlightButton = document.rootVisualElement.Q("SwitchWalking") as Button;
+        SwitchFlightButton.RegisterCallback<ClickEvent>(OnSwitchFlightClick);
 
         GridColumnsField = document.rootVisualElement.Q("GridColumns") as IntegerField;
         GridRowField = document.rootVisualElement.Q("GridRows") as IntegerField;
@@ -67,8 +69,6 @@ public class MazeUiEvents : MonoBehaviour
 
     private void OnGenerateMazeClick(ClickEvent evt)
     {
-        mazeSpawner.Columns = GridColumnsField.value;
-        mazeSpawner.Rows = GridRowField.value;
         mazeSpawner.StartMazeGeneration();
     }
 
@@ -80,16 +80,9 @@ public class MazeUiEvents : MonoBehaviour
         mazeSpawner.RemoveGrid();
     }
 
-    private void OnSwitchWalkingClick(ClickEvent evt)
+    private void OnSwitchFlightClick(ClickEvent evt)
     {
-        if (!rigidBody.useGravity)
-        {
-            rigidBody.useGravity = true;
-        }
-        else
-        {
-            rigidBody.useGravity = false;
-        }
+        onSwitchFlight.TriggerEvent();
     }
 
     public void ActiveProgressBar(int maxValue)
@@ -97,6 +90,7 @@ public class MazeUiEvents : MonoBehaviour
         progressBar.highValue = maxValue;
         progressBar.visible = true;
     }
+
     public void UpdateProgressBar(int progress)
     {
         progressBar.value = progress;

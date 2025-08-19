@@ -1,3 +1,4 @@
+using System.Data;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -5,30 +6,36 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField]
+    private Transform cameraOrientation;
+
+    [SerializeField]
+    LayerMask mazeWalls;
+
+
+    [Header("Speed Parameters")]
+    [SerializeField]
     private float walkSpeed = 5f;
 
     [SerializeField]
     private float runSpeed = 8f;
 
-    [SerializeField]
-    private Transform cameraOrientation;
 
-    [SerializeField]
-    private PlayerLook playerLook;
+    [Header("Events")]
+    public GameEvent onMenu;
 
-    [SerializeField]
-    LayerMask mazeWalls;
 
-    public Rigidbody rb;
+    private Rigidbody rb;
 
     private float moveSpeed;
 
     private float movementX, movementZ;
 
-    Vector3 moveDirection;
+    private Vector3 moveDirection;
 
-    Ray ray;
-    RaycastHit hit;
+    private Ray ray;
+
+    private RaycastHit hit;
+
 
     private bool _isJumping = false;
 
@@ -44,19 +51,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private bool _IsCursorVisible = false;
-
-    private bool IsCursorVisible
-    {
-        get
-        {
-            return _IsCursorVisible;
-        }
-        set
-        {
-            _IsCursorVisible = value;
-        }
-    }
+    private bool IsCursorVisible = false;
 
     private void Awake()
     {
@@ -66,11 +61,6 @@ public class PlayerController : MonoBehaviour
         ray = new Ray(Vector3.zero, Vector3.forward);
 
         moveSpeed = walkSpeed;
-    }
-
-    void Start()
-    {
-        mazeWalls = LayerMask.GetMask("Maze Walls");
     }
 
     private void FixedUpdate()
@@ -122,21 +112,15 @@ public class PlayerController : MonoBehaviour
     {
         if (IsCursorVisible)
         {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-
-            playerLook.enabled = true;
             moveSpeed = walkSpeed;
+            onMenu.TriggerEvent();
 
             IsCursorVisible = false;
         }
         else if (!IsCursorVisible)
         {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-
-            playerLook.enabled = false;
             moveSpeed = 0;
+            onMenu.TriggerEvent();
 
             IsCursorVisible = true;
         }
@@ -149,17 +133,20 @@ public class PlayerController : MonoBehaviour
             ray.origin = transform.position;
             ray.direction = cameraOrientation.forward;
 
-            if (Physics.Raycast(ray, out hit, 1000f, mazeWalls))
+            if (Physics.Raycast(ray, out hit, 100f, mazeWalls))
             {
-                Debug.Log("HIT!" + hit.transform.gameObject.name);
                 hit.transform.gameObject.SetActive(false);
             }
 
-            if (Physics.Raycast(ray, out hit, 1000f, mazeWalls))
+            if (Physics.Raycast(ray, out hit, 100f, mazeWalls))
             {
-                Debug.Log("HIT!" + hit.transform.gameObject.name);
                 hit.transform.gameObject.SetActive(false);
             }
         }
+    }
+
+    public void OnSwitchFlight()
+    {
+        rb.useGravity = !rb.useGravity;
     }
 }

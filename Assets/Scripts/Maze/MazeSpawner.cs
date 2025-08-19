@@ -1,35 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class MazeSpawner : MonoBehaviour
 {
-    public MazeBlock mazeBlock;
+    public int Columns = 2, Rows = 2;
+
 
     [SerializeField]
     private MazeSpawner mazeParent; // Needed to assign individual blocks under Maze parent class
 
     [SerializeField]
-    private MazeUiEvents mazeUiEvents;
+    private MazeBlock mazeBlock;
 
-    public int Columns = 2, Rows = 2;
-    private int OldColumns, OldRows;
+    [SerializeField]
+    private MazeUIEvents mazeUIEvents;
 
     [SerializeField]
     private float mazeGenerationDelay = 0.05f;
 
-    private int progress = 0;
 
     private MazeBlock[,] MazeGrid;
 
     private bool MazeGenerated = false;
-    private bool GridGenerated = false;
+
+    private int progress = 0;
+
 
     public void GenerateGrid()
     {
-        Debug.Log("Start Grid Generation");
-
-        if (GridGenerated)
+        if (MazeGrid != null)
         {
             RemoveGrid();
         }
@@ -43,27 +44,23 @@ public class MazeSpawner : MonoBehaviour
                 MazeGrid[i, j] = Instantiate(mazeBlock, new Vector3(i, 0, j), Quaternion.identity, mazeParent.transform);
             }
         }
-
-        OldColumns = Columns;
-        OldRows = Rows;
-        GridGenerated = true;
     }
 
     public void RemoveGrid()
     {
-        Debug.Log("Remove Grid");
-
-        for (int i = 0; i < OldColumns; i++) // Generate grid size to its given size
+        if (MazeGrid != null)
         {
-            for (int j = 0; j < OldRows; j++)
+            for (int i = 0; i < Columns; i++) // Generate grid size to its given size
             {
-                Destroy(MazeGrid[i, j].gameObject);
+                for (int j = 0; j < Rows; j++)
+                {
+                    Destroy(MazeGrid[i, j].gameObject);
+                }
             }
-        }
 
-        MazeGrid = null;
-        MazeGenerated = false;
-        GridGenerated = false;
+            MazeGrid = null;
+            MazeGenerated = false;
+        }
     }
 
     public void StartMazeGeneration()
@@ -74,16 +71,11 @@ public class MazeSpawner : MonoBehaviour
             GenerateGrid();
         }
 
-        if (!GridGenerated)
-        {
-            GenerateGrid();
-        }
-
-        Debug.Log("Start Maze Generation");
-
-        mazeUiEvents.ActiveProgressBar(MazeGrid.Length - 1);
+        mazeUIEvents.ActiveProgressBar(MazeGrid.Length - 1);
         progress = 0;
+
         StartCoroutine(GenerateMaze(null, MazeGrid[0, 0])); // Start generating paths in grid
+
         MazeGenerated = true;
     }
 
@@ -104,7 +96,7 @@ public class MazeSpawner : MonoBehaviour
             if (nextBlock != null)
             {
                 progress++;
-                mazeUiEvents.UpdateProgressBar(progress);
+                mazeUIEvents.UpdateProgressBar(progress);
 
                 yield return GenerateMaze(currentBlock, nextBlock);
             }

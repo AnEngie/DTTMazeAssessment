@@ -14,9 +14,6 @@ public class MazeBlock : MonoBehaviour
     {
         IsPath = true;
         Inside.SetActive(false);
-
-        // var visible = gameObject.GetComponent<MeshRenderer>();
-        // visible.enabled = false;
     }
 
     public void RemoveUpperWall()
