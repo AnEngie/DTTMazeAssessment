@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Callbacks;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
@@ -11,6 +12,7 @@ public class MazeUiEvents : MonoBehaviour
     private Button GenerateGridButton;
     private Button GenerateMazeButton;
     private Button DestroyGridButton;
+    private Button SwitchWalkingButton;
 
     private IntegerField GridColumnsField;
     private IntegerField GridRowField;
@@ -19,6 +21,8 @@ public class MazeUiEvents : MonoBehaviour
 
     [SerializeField]
     private MazeSpawner mazeSpawner;
+
+    public Rigidbody rigidBody;
 
     void Awake()
     {
@@ -41,6 +45,9 @@ public class MazeUiEvents : MonoBehaviour
 
         DestroyGridButton = document.rootVisualElement.Q("DestroyGrid") as Button;
         DestroyGridButton.RegisterCallback<ClickEvent>(OnDestroyGridClick);
+
+        SwitchWalkingButton = document.rootVisualElement.Q("SwitchWalking") as Button;
+        SwitchWalkingButton.RegisterCallback<ClickEvent>(OnSwitchWalkingClick);
 
         GridColumnsField = document.rootVisualElement.Q("GridColumns") as IntegerField;
         GridRowField = document.rootVisualElement.Q("GridRows") as IntegerField;
@@ -71,6 +78,18 @@ public class MazeUiEvents : MonoBehaviour
         DestroyGridButton.SetEnabled(false);
 
         mazeSpawner.RemoveGrid();
+    }
+
+    private void OnSwitchWalkingClick(ClickEvent evt)
+    {
+        if (!rigidBody.useGravity)
+        {
+            rigidBody.useGravity = true;
+        }
+        else
+        {
+            rigidBody.useGravity = false;
+        }
     }
 
     public void ActiveProgressBar(int maxValue)

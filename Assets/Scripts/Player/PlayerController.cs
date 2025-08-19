@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private PlayerLook playerLook;
 
-    Rigidbody rb;
+    public Rigidbody rb;
 
     private float moveSpeed;
 
@@ -55,7 +55,8 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-
+        rb.freezeRotation = true;
+        
         moveSpeed = walkSpeed;
     }
 

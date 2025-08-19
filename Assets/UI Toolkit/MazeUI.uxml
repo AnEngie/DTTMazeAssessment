@@ -9,6 +9,7 @@
         <ui:IntegerField label="Rows" value="10" name="GridRows" focusable="true" tabindex="-1" class="inputField" />
         <ui:Button text="Generate Maze" parse-escape-sequences="true" display-tooltip-when-elided="true" name="GenerateMaze" tabindex="-1" class="button" />
         <ui:Button text="Destroy Grid" parse-escape-sequences="true" display-tooltip-when-elided="true" name="DestroyGrid" tabindex="-1" class="button" />
+        <ui:Button text="Switch to walking" parse-escape-sequences="true" display-tooltip-when-elided="true" name="SwitchWalking" class="button" />
     </ui:VisualElement>
     <ui:VisualElement name="BottomContainer" style="flex-grow: 1; justify-content: flex-start; align-self: auto; align-items: center; height: auto;">
         <ui:VisualElement name="ProgressBarContainer" style="flex-grow: 1; align-items: flex-end; flex-direction: row; justify-content: center; align-self: auto; height: 1px;">
