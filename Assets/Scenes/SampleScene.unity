@@ -429,6 +429,12 @@ Transform:
   m_Children: []
   m_Father: {fileID: 351045931}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &894751778 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7949959505819302759, guid: 3bd64b45f553ad24ea2a3f852f86af9d,
+    type: 3}
+  m_PrefabInstance: {fileID: 326128190013131651}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1126398945 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5986648165050700802, guid: 293adee9537d2bf4ea79b8a8eabb791b,
@@ -541,18 +547,86 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 326128190013131651}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 894751778}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f8fe4591bdc38a640afe667e5a9f53d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!54 &1501565737 stripped
-Rigidbody:
-  m_CorrespondingSourceObject: {fileID: 3901979858727556397, guid: 3bd64b45f553ad24ea2a3f852f86af9d,
+--- !u!114 &1501565740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 894751778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f201c39de1c7bd4ba1a6a65a790a1d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: beea0dc367555724cbe0a1990f12d6b7, type: 2}
+  onEventTriggered:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1501565736}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnSwitchFlight
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!1 &1946612912 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6433657000109223137, guid: 3bd64b45f553ad24ea2a3f852f86af9d,
     type: 3}
   m_PrefabInstance: {fileID: 326128190013131651}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1946612913 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 689535141159084483, guid: 3bd64b45f553ad24ea2a3f852f86af9d,
+    type: 3}
+  m_PrefabInstance: {fileID: 326128190013131651}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1946612912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d89aeca6a2541b74dac7a2e986cbe14b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1946612918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1946612912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f201c39de1c7bd4ba1a6a65a790a1d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: b19613c781cd94445b3c46b3f69f3e7a, type: 2}
+  onEventTriggered:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1946612913}
+        m_TargetAssemblyTypeName: PlayerLook, Assembly-CSharp
+        m_MethodName: OnMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1966310976
 GameObject:
   m_ObjectHideFlags: 0
@@ -616,7 +690,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mazeSpawner: {fileID: 1126398946}
-  rigidBody: {fileID: 1501565737}
+  onSwitchFlight: {fileID: 11400000, guid: beea0dc367555724cbe0a1990f12d6b7, type: 2}
 --- !u!1001 &326128190013131651
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -625,6 +699,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 920514166338168732, guid: 3bd64b45f553ad24ea2a3f852f86af9d,
+        type: 3}
+      propertyPath: far clip plane
+      value: 250
+      objectReference: {fileID: 0}
     - target: {fileID: 3272417121260495489, guid: 3bd64b45f553ad24ea2a3f852f86af9d,
         type: 3}
       propertyPath: m_ActionEvents.Array.size
@@ -675,6 +754,22 @@ PrefabInstance:
       propertyPath: m_ActionEvents.Array.data[5].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 3901979858727556397, guid: 3bd64b45f553ad24ea2a3f852f86af9d,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3901979858727556397, guid: 3bd64b45f553ad24ea2a3f852f86af9d,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5953867345697831743, guid: 3bd64b45f553ad24ea2a3f852f86af9d,
+        type: 3}
+      propertyPath: onMenu
+      value: 
+      objectReference: {fileID: 11400000, guid: b19613c781cd94445b3c46b3f69f3e7a,
+        type: 2}
     - target: {fileID: 5953867345697831743, guid: 3bd64b45f553ad24ea2a3f852f86af9d,
         type: 3}
       propertyPath: mazeWalls.m_Bits
@@ -738,7 +833,15 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7949959505819302759, guid: 3bd64b45f553ad24ea2a3f852f86af9d,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1501565740}
+    - targetCorrespondingSourceObject: {fileID: 6433657000109223137, guid: 3bd64b45f553ad24ea2a3f852f86af9d,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1946612918}
   m_SourcePrefab: {fileID: 100100000, guid: 3bd64b45f553ad24ea2a3f852f86af9d, type: 3}
 --- !u!1001 &1518390938919873211
 PrefabInstance:
@@ -774,6 +877,11 @@ PrefabInstance:
       propertyPath: mazeParent
       value: 
       objectReference: {fileID: 1126398946}
+    - target: {fileID: -1471834569313862082, guid: 293adee9537d2bf4ea79b8a8eabb791b,
+        type: 3}
+      propertyPath: mazeUIEvents
+      value: 
+      objectReference: {fileID: 1966310979}
     - target: {fileID: -1471834569313862082, guid: 293adee9537d2bf4ea79b8a8eabb791b,
         type: 3}
       propertyPath: mazeUiEvents
@@ -839,6 +947,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Maze
+      objectReference: {fileID: 0}
+    - target: {fileID: 5986648165050700802, guid: 293adee9537d2bf4ea79b8a8eabb791b,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

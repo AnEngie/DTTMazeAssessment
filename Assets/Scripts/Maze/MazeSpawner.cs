@@ -42,6 +42,7 @@ public class MazeSpawner : MonoBehaviour
             for (int j = 0; j < Rows; j++)
             {
                 MazeGrid[i, j] = Instantiate(mazeBlock, new Vector3(i, 0, j), Quaternion.identity, mazeParent.transform);
+                StaticBatchingUtility.Combine(MazeGrid[i, j].gameObject);
             }
         }
     }

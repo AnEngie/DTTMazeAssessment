@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class MazeBlock : MonoBehaviour
@@ -18,21 +19,93 @@ public class MazeBlock : MonoBehaviour
 
     public void RemoveUpperWall()
     {
-        UpperWall.SetActive(false);
+        if (!UpperWall.IsDestroyed())
+        {
+            Destroy(UpperWall);
+        }
+
+        if (!LowerWall.IsDestroyed())
+        {
+            LowerWall.SetActive(true);
+        }
+
+        if (!LeftWall.IsDestroyed())
+        {
+            LeftWall.SetActive(true);
+        }
+
+        if (!RightWall.IsDestroyed())
+        {
+            RightWall.SetActive(true);
+        }
     }
 
     public void RemoveLowerWall()
     {
-        LowerWall.SetActive(false);
+        if (!LowerWall.IsDestroyed())
+        {
+            Destroy(LowerWall);
+        }
+
+        if (!UpperWall.IsDestroyed())
+        {
+            UpperWall.SetActive(true);
+        }
+
+        if (!LeftWall.IsDestroyed())
+        {
+            LeftWall.SetActive(true);
+        }
+
+        if (!RightWall.IsDestroyed())
+        {
+            RightWall.SetActive(true);
+        }
     }
 
     public void RemoveLeftWall()
     {
-        LeftWall.SetActive(false);
+        if (!LeftWall.IsDestroyed())
+        {
+            Destroy(LeftWall);
+        }
+
+        if (!LowerWall.IsDestroyed())
+        {
+            LowerWall.SetActive(true);
+        }
+
+        if (!UpperWall.IsDestroyed())
+        {
+            UpperWall.SetActive(true);
+        }
+
+        if (!RightWall.IsDestroyed())
+        {
+            RightWall.SetActive(true);
+        }
     }
-    
+
     public void RemoveRightWall()
     {
-        RightWall.SetActive(false);
+        if (!RightWall.IsDestroyed())
+        {
+            Destroy(RightWall);
+        }
+
+        if (!LowerWall.IsDestroyed())
+        {
+            LowerWall.SetActive(true);
+        }
+
+        if (!UpperWall.IsDestroyed())
+        {
+            UpperWall.SetActive(true);
+        }
+
+        if (!LeftWall.IsDestroyed())
+        {
+            LeftWall.SetActive(true);
+        }
     }
 }
