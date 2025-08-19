@@ -16,6 +16,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private PlayerLook playerLook;
 
+    [SerializeField]
+    LayerMask mazeWalls;
+
     public Rigidbody rb;
 
     private float moveSpeed;
@@ -23,6 +26,9 @@ public class PlayerController : MonoBehaviour
     private float movementX, movementZ;
 
     Vector3 moveDirection;
+
+    Ray ray;
+    RaycastHit hit;
 
     private bool _isJumping = false;
 
@@ -37,7 +43,7 @@ public class PlayerController : MonoBehaviour
             _isJumping = value;
         }
     }
-    
+
     private bool _IsCursorVisible = false;
 
     private bool IsCursorVisible
@@ -56,8 +62,15 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
-        
+
+        ray = new Ray(Vector3.zero, Vector3.forward);
+
         moveSpeed = walkSpeed;
+    }
+
+    void Start()
+    {
+        mazeWalls = LayerMask.GetMask("Maze Walls");
     }
 
     private void FixedUpdate()
@@ -105,7 +118,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-        public void OnMenu(InputAction.CallbackContext context)
+    public void OnMenu(InputAction.CallbackContext context)
     {
         if (IsCursorVisible)
         {
@@ -126,6 +139,27 @@ public class PlayerController : MonoBehaviour
             moveSpeed = 0;
 
             IsCursorVisible = true;
+        }
+    }
+
+    public void OnClick(InputAction.CallbackContext context)
+    {
+        if (context.started && !IsCursorVisible)
+        {
+            ray.origin = transform.position;
+            ray.direction = cameraOrientation.forward;
+
+            if (Physics.Raycast(ray, out hit, 1000f, mazeWalls))
+            {
+                Debug.Log("HIT!" + hit.transform.gameObject.name);
+                hit.transform.gameObject.SetActive(false);
+            }
+
+            if (Physics.Raycast(ray, out hit, 1000f, mazeWalls))
+            {
+                Debug.Log("HIT!" + hit.transform.gameObject.name);
+                hit.transform.gameObject.SetActive(false);
+            }
         }
     }
 }
