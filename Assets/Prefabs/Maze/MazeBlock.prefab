@@ -100,7 +100,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -221,7 +221,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -342,7 +342,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -411,10 +411,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53dd11aa18c85094292e63ee1d6a1bcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UpperWall: {fileID: 1939415894785650809}
-  LowerWall: {fileID: 6993676149502197886}
-  LeftWall: {fileID: 6283949167191093765}
-  RightWall: {fileID: 1600980261869957722}
   mazeWalls:
   - {fileID: 1939415894785650809}
   - {fileID: 6993676149502197886}
@@ -520,7 +516,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3

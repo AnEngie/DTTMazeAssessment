@@ -42,15 +42,6 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Menu",
-                    "type": "Button",
-                    "id": "bdc38185-cce6-4c6b-9baf-51bfc81efb04",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Fire",
                     "type": "Button",
                     "id": "d162e945-d657-423f-8e79-2518cc3d9463",
@@ -60,9 +51,27 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Build",
+                    "type": "Button",
+                    "id": "bf6a0c9b-9574-4d0f-b85a-c17579ae63ee",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Fly",
                     "type": "Button",
                     "id": "9c3ce199-dddd-4cb5-a04c-1281987246c7",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Menu",
+                    "type": "Button",
+                    "id": "bdc38185-cce6-4c6b-9baf-51bfc81efb04",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -259,17 +268,6 @@
                 },
                 {
                     "name": "",
-                    "id": "92f151d9-4982-4347-ade5-386796ae6e60",
-                    "path": "<Keyboard>/tab",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Menu",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "69a31698-e3bf-49d4-863f-53cd1d6516e1",
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
@@ -287,6 +285,28 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "Fly",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8854c9e6-a7fa-40e0-bedc-c627d152e0b1",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Build",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "92f151d9-4982-4347-ade5-386796ae6e60",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Menu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

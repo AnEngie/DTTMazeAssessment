@@ -14,7 +14,7 @@ public class MazeWall : MonoBehaviour
         boxCollider = GetComponent<BoxCollider>();
         meshRenderer = GetComponent<MeshRenderer>();
 
-        boxCollider.enabled = false;
+        boxCollider.isTrigger = true;
         meshRenderer.enabled = false;
     }
 
@@ -22,19 +22,19 @@ public class MazeWall : MonoBehaviour
     {
         if (!DisabledByPath)
         {
-            boxCollider.enabled = true;
+            boxCollider.isTrigger = false;
             meshRenderer.enabled = true;
         }
         else if (DisabledByPath)
         {
-            boxCollider.enabled = false;
+            boxCollider.isTrigger = true;
             meshRenderer.enabled = false;
         }
     }
 
     public void ResetWall()
     {
-        boxCollider.enabled = false;
+        boxCollider.isTrigger = true;
         meshRenderer.enabled = false;
 
         DisabledByPath = false;

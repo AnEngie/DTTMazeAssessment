@@ -4,11 +4,17 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
+    public static float distanceFromTarget;
+    [SerializeField] float toTarget;
+
     [SerializeField]
     private Transform cameraOrientation;
 
     [SerializeField]
-    LayerMask mazeWalls;
+    LayerMask layersToHit;
+
+    [SerializeField]
+    private float clickRange = 100f;
 
 
     [Header("Speed Parameters")]
@@ -35,7 +41,8 @@ public class PlayerController : MonoBehaviour
 
     private Ray ray;
 
-    private RaycastHit hit;
+    private RaycastHit hitInfo;
+    private RaycastHit[] hits;
 
 
     private bool _isJumping = false;
@@ -60,7 +67,7 @@ public class PlayerController : MonoBehaviour
         rb.freezeRotation = true;
 
         capsuleCollider = GetComponent<CapsuleCollider>();
-        
+
         ray = new Ray(Vector3.zero, Vector3.forward);
 
         moveSpeed = walkSpeed;
@@ -129,21 +136,34 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void OnClick(InputAction.CallbackContext context)
+    public void OnLeftClick(InputAction.CallbackContext context)
     {
         if (context.started && !IsCursorVisible)
         {
             ray.origin = transform.position;
             ray.direction = cameraOrientation.forward;
 
-            if (Physics.Raycast(ray, out hit, 100f, mazeWalls))
+            if (Physics.Raycast(ray, out hitInfo, clickRange, layersToHit))
             {
-                hit.transform.gameObject.SetActive(false);
+                GameObject mazeWall = hitInfo.transform.gameObject;
+                mazeWall.GetComponent<MeshRenderer>().enabled = false;
+                mazeWall.GetComponent<BoxCollider>().isTrigger = true;
             }
+        }
+    }
 
-            if (Physics.Raycast(ray, out hit, 100f, mazeWalls))
+    public void OnRightClick(InputAction.CallbackContext context)
+    {
+        if (context.started && !IsCursorVisible)
+        {
+            ray.origin = transform.position;
+            ray.direction = cameraOrientation.forward;
+
+            if (Physics.Raycast(ray, out hitInfo, clickRange, layersToHit))
             {
-                hit.transform.gameObject.SetActive(false);
+                GameObject mazeWall = hitInfo.transform.gameObject;
+                mazeWall.GetComponent<MeshRenderer>().enabled = true;
+                mazeWall.GetComponent<BoxCollider>().isTrigger = false;
             }
         }
     }
