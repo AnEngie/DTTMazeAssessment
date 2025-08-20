@@ -4,9 +4,6 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
-    public static float distanceFromTarget;
-    [SerializeField] float toTarget;
-
     [SerializeField]
     private Transform cameraOrientation;
 
@@ -42,7 +39,6 @@ public class PlayerController : MonoBehaviour
     private Ray ray;
 
     private RaycastHit hitInfo;
-    private RaycastHit[] hits;
 
 
     private bool _isJumping = false;

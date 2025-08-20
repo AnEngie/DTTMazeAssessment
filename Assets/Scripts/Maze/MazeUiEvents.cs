@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEngine.UIElements.Experimental;
 
 public class MazeUIEvents : MonoBehaviour
 {
@@ -10,11 +11,11 @@ public class MazeUIEvents : MonoBehaviour
     private UIDocument document;
 
     // Buttons
-    private Button GenerateMazeButton;
+    private Button generateMazeButton;
 
     // InputFields
-    private IntegerField ColumnsField;
-    private IntegerField RowField;
+    private IntegerField columnsField;
+    private IntegerField rowField;
 
     // Progressbar
     private ProgressBar progressBar;
@@ -30,19 +31,33 @@ public class MazeUIEvents : MonoBehaviour
 
     private void AssignVisualElements()
     {
-        GenerateMazeButton = document.rootVisualElement.Q("GenerateMazeBTTN") as Button;
-        GenerateMazeButton.RegisterCallback<ClickEvent>(OnGenerateMazeClick);
+        generateMazeButton = document.rootVisualElement.Q("GenerateMazeBTTN") as Button;
+        generateMazeButton.RegisterCallback<ClickEvent>(OnGenerateMazeClick);
 
-        ColumnsField = document.rootVisualElement.Q("ColumnsField") as IntegerField;
-        RowField = document.rootVisualElement.Q("RowsField") as IntegerField;
+        columnsField = document.rootVisualElement.Q("ColumnsField") as IntegerField;
+        rowField = document.rootVisualElement.Q("RowsField") as IntegerField;
 
         progressBar = document.rootVisualElement.Q("MazeProgressBar") as ProgressBar;
     }
 
     private void OnGenerateMazeClick(ClickEvent evt)
-    {        
-        mazeSpawner.columns = ColumnsField.value;
-        mazeSpawner.rows = RowField.value;
+    {
+        if (columnsField.value > mazeSpawner.maxColumns || rowField.value > mazeSpawner.maxRows)
+        {
+            columnsField.value = mazeSpawner.maxColumns;
+            rowField.value = mazeSpawner.maxColumns;
+            return;
+        }
+
+        if (columnsField.value < 10 || rowField.value < 10)
+        {
+            columnsField.value = 10;
+            rowField.value = 10;
+            return;
+        }
+        
+        mazeSpawner.columns = columnsField.value;
+        mazeSpawner.rows = rowField.value;
 
         Debug.Log("Start Maze Generation");
         mazeSpawner.StartMazeGeneration();

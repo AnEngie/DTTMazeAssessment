@@ -6,8 +6,7 @@ public class MazeSpawner : MonoBehaviour
 {
     public int columns = 10, rows = 10;
 
-    [SerializeField]
-    private int maxColumns = 250, maxRows = 250;
+    public int maxColumns = 250, maxRows = 250;
 
     [SerializeField]
     private MazeSpawner mazeParent; // Needed to assign individual blocks under Maze parent class
@@ -23,9 +22,11 @@ public class MazeSpawner : MonoBehaviour
         RightWall
     };
 
-    [Header("Events")]
     [SerializeField]
     private MazeUIEvents mazeUIEvents;
+
+    [Header("Events")]
+    public GameEvent OnLoaded;
 
 
     private MazeBlock[,] MazeGrid;
@@ -37,7 +38,7 @@ public class MazeSpawner : MonoBehaviour
     void Start()
     {
         // Pre-generate Grid as to reduce lag when big mazes are requested
-        
+
         MazeGrid = new MazeBlock[maxColumns, maxRows];
 
         GenerateGrid(maxColumns, maxRows);
@@ -55,6 +56,8 @@ public class MazeSpawner : MonoBehaviour
                 StaticBatchingUtility.Combine(MazeGrid[i, j].gameObject); // Batch Game Objects with same materials together for better performance
             }
         }
+
+        OnLoaded.TriggerEvent();
     }
 
     public void StartMazeGeneration()
@@ -69,48 +72,22 @@ public class MazeSpawner : MonoBehaviour
             MazeGenerated = false;
         }
 
+        StartCoroutine(GenerateMaze());
+    }
+
+    private IEnumerator GenerateMaze()
+    {
+        // When Algorithm is done generate entrance and exit
+
+        yield return StartAlgorithm(null, MazeGrid[0, 0]);
+
         MazeGrid[0, 0].RemoveWall((int)WallTypes.LeftWall);
         MazeGrid[0, 0].RemoveWall((int)WallTypes.LowerWall);
 
         MazeGenerated = true;
-
-        StartCoroutine(GenerateMaze(null, MazeGrid[0, 0]));  // Start generating paths in grid
-
-        ChooseRandomExit(); // choose a block to make the exit
     }
 
-    private void ChooseRandomExit()
-    {
-        int columnsOrRows = Random.Range(0, 2);
-
-        if (columnsOrRows == 1) // Columns 1, Row 2
-        {
-            int chosenColumn = Random.Range(0, columns);
-            MazeGrid[1, chosenColumn].RemoveWall((int)WallTypes.LeftWall);
-            MazeGrid[1, chosenColumn].RemoveWall((int)WallTypes.RightWall);
-        }
-        else
-        {
-            int chosenRow = Random.Range(0, columns);
-            MazeGrid[chosenRow, 0].RemoveWall((int)WallTypes.UpperWall);
-            MazeGrid[chosenRow, 0].RemoveWall((int)WallTypes.LowerWall);
-        }
-    }
-
-    private void ResetMaze()
-    {
-        StopAllCoroutines(); // Stop Maze Generation coroutine if it was active
-
-        for (int i = 0; i < maxColumns; i++) // Generate grid size to its given size
-        {
-            for (int j = 0; j < maxRows; j++)
-            {
-                MazeGrid[i, j].ResetBlock(); // Set Mesh renderer and box collider to unactive
-            }
-        }
-    }
-
-    private IEnumerator GenerateMaze(MazeBlock previousBlock, MazeBlock currentBlock)
+    private IEnumerator StartAlgorithm(MazeBlock previousBlock, MazeBlock currentBlock)
     {
         currentBlock.MakePath(); // Mark block as visited by algorithm
 
@@ -127,7 +104,8 @@ public class MazeSpawner : MonoBehaviour
                 progress++;
                 mazeUIEvents.UpdateProgressBar(progress);
 
-                yield return GenerateMaze(currentBlock, nextBlock);
+                yield return StartAlgorithm(currentBlock, nextBlock);
+
             }
         } while (nextBlock != null); // Makes algorithm visit older blocks when path hits dead end
     }
@@ -230,5 +208,18 @@ public class MazeSpawner : MonoBehaviour
         }
 
         return unvisitedNeighbours;
+    }
+
+    private void ResetMaze()
+    {
+        StopAllCoroutines(); // Stop Maze Generation coroutine if it was active
+
+        for (int i = 0; i < maxColumns; i++) // Generate grid size to its given size
+        {
+            for (int j = 0; j < maxRows; j++)
+            {
+                MazeGrid[i, j].ResetBlock(); // Set Mesh renderer and box collider to unactive
+            }
+        }
     }
 }
