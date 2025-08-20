@@ -118,7 +118,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void OnMenu(InputAction.CallbackContext context)
+    public void OnMenu(InputAction.CallbackContext context) // Make curser in/visible
     {
         if (IsCursorVisible)
         {
@@ -136,7 +136,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void OnLeftClick(InputAction.CallbackContext context)
+    public void OnLeftClick(InputAction.CallbackContext context) // Destroy wall player is looking at
     {
         if (context.started && !IsCursorVisible)
         {
@@ -152,7 +152,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void OnRightClick(InputAction.CallbackContext context)
+    public void OnRightClick(InputAction.CallbackContext context) // Build a wall where the player is looking
     {
         if (context.started && !IsCursorVisible)
         {
@@ -168,7 +168,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void OnSwitchFlight(InputAction.CallbackContext context)
+    public void OnSwitchFlight(InputAction.CallbackContext context) // Dis/enable flight
     {
         rb.useGravity = !rb.useGravity;
 

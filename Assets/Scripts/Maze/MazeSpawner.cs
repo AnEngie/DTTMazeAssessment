@@ -65,12 +65,36 @@ public class MazeSpawner : MonoBehaviour
         if (MazeGenerated) // Reset the maze back before generating again
         {
             ResetMaze();
-            
+
             MazeGenerated = false;
         }
 
+        MazeGrid[0, 0].RemoveWall((int)WallTypes.LeftWall);
+        MazeGrid[0, 0].RemoveWall((int)WallTypes.LowerWall);
+
         MazeGenerated = true;
+
         StartCoroutine(GenerateMaze(null, MazeGrid[0, 0]));  // Start generating paths in grid
+
+        ChooseRandomExit(); // choose a block to make the exit
+    }
+
+    private void ChooseRandomExit()
+    {
+        int columnsOrRows = Random.Range(0, 2);
+
+        if (columnsOrRows == 1) // Columns 1, Row 2
+        {
+            int chosenColumn = Random.Range(0, columns);
+            MazeGrid[1, chosenColumn].RemoveWall((int)WallTypes.LeftWall);
+            MazeGrid[1, chosenColumn].RemoveWall((int)WallTypes.RightWall);
+        }
+        else
+        {
+            int chosenRow = Random.Range(0, columns);
+            MazeGrid[chosenRow, 0].RemoveWall((int)WallTypes.UpperWall);
+            MazeGrid[chosenRow, 0].RemoveWall((int)WallTypes.LowerWall);
+        }
     }
 
     private void ResetMaze()
@@ -151,7 +175,7 @@ public class MazeSpawner : MonoBehaviour
 
         if (unvisitedNeighbours.Count != 0) // Gets random neighbour from all available ones
         {
-            var chosenBlock = Random.Range(0, unvisitedNeighbours.Count);
+            int chosenBlock = Random.Range(0, unvisitedNeighbours.Count);
             nextBlock = unvisitedNeighbours[chosenBlock];
         }
 
