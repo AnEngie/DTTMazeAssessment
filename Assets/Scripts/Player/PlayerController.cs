@@ -142,6 +142,11 @@ public class PlayerController : MonoBehaviour
             {
                 hit.transform.gameObject.SetActive(false);
             }
+
+            if (Physics.Raycast(ray, out hit, 100f, mazeWalls))
+            {
+                hit.transform.gameObject.SetActive(false);
+            }
         }
     }
 

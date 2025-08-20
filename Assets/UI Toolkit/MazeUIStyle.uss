@@ -33,7 +33,7 @@
     align-self: auto;
     -unity-font-style: bold;
     font-size: 20px;
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(217, 217, 217);
     border-left-color: rgb(56, 56, 56);
     border-right-color: rgb(56, 56, 56);
     border-top-color: rgb(56, 56, 56);
@@ -49,4 +49,15 @@
 }
 
 .integerField {
+}
+
+.unity-text-element-.input-field-component {
+}
+
+.button:hover {
+    scale: 1.1 1.1;
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+    background-color: rgb(255, 255, 255);
+    transition-duration: 0.25s;
+    transition-timing-function: ease-in-out;
 }
