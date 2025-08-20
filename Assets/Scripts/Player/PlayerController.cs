@@ -159,6 +159,6 @@ public class PlayerController : MonoBehaviour
 
         capsuleCollider.enabled = !capsuleCollider.enabled;
 
-        noclip = !noclip;
+        noclip = !noclip; // Stop user from flying when in walking mode
     }
 }

@@ -10,7 +10,7 @@ public class MazeBlock : MonoBehaviour
 
     public void MakePath()
     {
-        IsPath = true;
+        IsPath = true; // Stop algorithm from revisiting
     }
 
     public void ResetBlock()
@@ -25,6 +25,7 @@ public class MazeBlock : MonoBehaviour
 
     public void RemoveWall(int wall)
     {
+        // Disable chosen wall and enable all others
         mazeWalls[wall].DisabledByPath = true;
 
         foreach (var wallType in mazeWalls)

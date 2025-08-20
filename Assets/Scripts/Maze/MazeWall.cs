@@ -20,12 +20,12 @@ public class MazeWall : MonoBehaviour
 
     public void DisableWall()
     {
-        if (!DisabledByPath)
+        if (!DisabledByPath) // enable wall
         {
             boxCollider.isTrigger = false;
             meshRenderer.enabled = true;
         }
-        else if (DisabledByPath)
+        else if (DisabledByPath) // disable wall
         {
             boxCollider.isTrigger = true;
             meshRenderer.enabled = false;

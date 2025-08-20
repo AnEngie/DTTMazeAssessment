@@ -42,6 +42,7 @@ public class MazeUIEvents : MonoBehaviour
 
     private void OnGenerateMazeClick(ClickEvent evt)
     {
+        //Check if input is valid
         if (columnsField.value > mazeSpawner.maxColumns || rowField.value > mazeSpawner.maxRows)
         {
             columnsField.value = mazeSpawner.maxColumns;
@@ -56,6 +57,7 @@ public class MazeUIEvents : MonoBehaviour
             return;
         }
         
+        // Set input to grid
         mazeSpawner.columns = columnsField.value;
         mazeSpawner.rows = rowField.value;
 
@@ -72,6 +74,7 @@ public class MazeUIEvents : MonoBehaviour
     {
         progressBar.value = progress;
 
+        // Disable progressbar when done
         if (progressBar.value >= progressBar.highValue)
         {
             progressBar.visible = false;

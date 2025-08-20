@@ -106,6 +106,7 @@ public class MazeSpawner : MonoBehaviour
             return;
         }
 
+        // Check walls to be removed
         if (previousBlock.transform.position.x < currentBlock.transform.position.x)
         {
             previousBlock.RemoveWall((int)WallTypes.RightWall);
