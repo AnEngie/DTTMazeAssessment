@@ -14,14 +14,11 @@ public class MazeUIEvents : MonoBehaviour
     private UIDocument document;
 
     // Buttons
-    private Button GenerateGridButton;
     private Button GenerateMazeButton;
-    private Button DestroyGridButton;
-    private Button SwitchFlightButton;
 
     // InputFields
-    private IntegerField GridColumnsField;
-    private IntegerField GridRowField;
+    private IntegerField ColumnsField;
+    private IntegerField RowField;
 
     // Progressbar
     private ProgressBar progressBar;
@@ -32,67 +29,31 @@ public class MazeUIEvents : MonoBehaviour
 
         AssignVisualElements();
 
-        GenerateMazeButton.SetEnabled(false);
-        DestroyGridButton.SetEnabled(false);
         progressBar.visible = false;
     }
 
     private void AssignVisualElements()
     {
-        GenerateGridButton = document.rootVisualElement.Q("GenerateGrid") as Button;
-        GenerateGridButton.RegisterCallback<ClickEvent>(OnGenerateGridClick);
-
-        GenerateMazeButton = document.rootVisualElement.Q("GenerateMaze") as Button;
+        GenerateMazeButton = document.rootVisualElement.Q("GenerateMazeBTTN") as Button;
         GenerateMazeButton.RegisterCallback<ClickEvent>(OnGenerateMazeClick);
 
-        DestroyGridButton = document.rootVisualElement.Q("DestroyGrid") as Button;
-        DestroyGridButton.RegisterCallback<ClickEvent>(OnDestroyGridClick);
-
-        SwitchFlightButton = document.rootVisualElement.Q("SwitchWalking") as Button;
-        SwitchFlightButton.RegisterCallback<ClickEvent>(OnSwitchFlightClick);
-
-        GridColumnsField = document.rootVisualElement.Q("GridColumns") as IntegerField;
-        GridRowField = document.rootVisualElement.Q("GridRows") as IntegerField;
+        ColumnsField = document.rootVisualElement.Q("ColumnsField") as IntegerField;
+        RowField = document.rootVisualElement.Q("RowsField") as IntegerField;
 
         progressBar = document.rootVisualElement.Q("MazeProgressBar") as ProgressBar;
     }
 
-    private void OnGenerateGridClick(ClickEvent evt)
-    {
-        GenerateMazeButton.SetEnabled(true);
-        DestroyGridButton.SetEnabled(true);
-
-        mazeSpawner.columns = GridColumnsField.value;
-        mazeSpawner.rows = GridRowField.value;
-        mazeSpawner.StartMazeGeneration();
-    }
-
     private void OnGenerateMazeClick(ClickEvent evt)
-    {
-        
-        GenerateMazeButton.SetEnabled(true);
-        DestroyGridButton.SetEnabled(true);
+    {        
+        mazeSpawner.columns = ColumnsField.value;
+        mazeSpawner.rows = RowField.value;
 
-        mazeSpawner.columns = GridColumnsField.value;
-        mazeSpawner.rows = GridRowField.value;
-        
+        Debug.Log("Start Maze Generation");
         mazeSpawner.StartMazeGeneration();
-    }
-
-    private void OnDestroyGridClick(ClickEvent evt)
-    {
-        
-    }
-
-    private void OnSwitchFlightClick(ClickEvent evt)
-    {
-        onSwitchFlight.TriggerEvent();
     }
 
     public void ActiveProgressBar(int maxValue)
     {
-        Debug.Log(maxValue);
-        
         progressBar.highValue = maxValue;
         progressBar.visible = true;
     }

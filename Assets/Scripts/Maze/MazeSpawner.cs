@@ -6,6 +6,8 @@ public class MazeSpawner : MonoBehaviour
 {
     public int columns = 2, rows = 2;
 
+    [SerializeField]
+    private int maxColumns = 250, maxRows = 250;
 
     [SerializeField]
     private MazeSpawner mazeParent; // Needed to assign individual blocks under Maze parent class
@@ -16,9 +18,6 @@ public class MazeSpawner : MonoBehaviour
     [SerializeField]
     private MazeUIEvents mazeUIEvents;
 
-    [SerializeField]
-    private float mazeGenerationDelay = 0.05f;
-
 
     private MazeBlock[,] MazeGrid;
 
@@ -26,17 +25,11 @@ public class MazeSpawner : MonoBehaviour
 
     private int progress = 0;
 
-
-    public void StartMazeGeneration()
+    void Start()
     {
-        MazeGrid ??= new MazeBlock[columns, rows];
+        MazeGrid = new MazeBlock[maxColumns, maxRows];
 
-        mazeUIEvents.ActiveProgressBar(MazeGrid.Length - 1);
-        progress = 0;
-
-        GenerateGrid(columns, rows);
-
-        MazeGenerated = true;
+        GenerateGrid(maxColumns, maxRows);
     }
 
     private void GenerateGrid(int columns, int rows)
@@ -51,10 +44,38 @@ public class MazeSpawner : MonoBehaviour
                 StaticBatchingUtility.Combine(MazeGrid[i, j].gameObject);
             }
         }
+    }
 
+    public void StartMazeGeneration()
+    {
+        mazeUIEvents.ActiveProgressBar(MazeGrid.Length - 1);
+        progress = 0;
+
+        if (MazeGenerated)
+        {
+            Debug.Log("Stop Maze Generation");
+            ResetMaze();
+            
+            MazeGenerated = false;
+        }
+
+        Debug.Log("Maze Generation Started");
+        MazeGenerated = true;
         StartCoroutine(GenerateMaze(null, MazeGrid[0, 0]));  // Start generating paths in grid
     }
 
+    private void ResetMaze()
+    {
+        StopAllCoroutines();
+
+        for (int i = 0; i < maxColumns; i++) // Generate grid size to its given size
+        {
+            for (int j = 0; j < maxRows; j++)
+            {
+                MazeGrid[i, j].ResetBlock();
+            }
+        }
+    }
 
     private IEnumerator GenerateMaze(MazeBlock previousBlock, MazeBlock currentBlock)
     {
@@ -72,7 +93,6 @@ public class MazeSpawner : MonoBehaviour
             {
                 progress++;
                 mazeUIEvents.UpdateProgressBar(progress);
-                Debug.Log(progress);
 
                 yield return GenerateMaze(currentBlock, nextBlock);
             }

@@ -9,103 +9,56 @@ public class MazeBlock : MonoBehaviour
     public bool IsPath { get; private set; }
 
     [SerializeField]
-    private GameObject UpperWall, LowerWall, LeftWall, RightWall, Inside;
+    private MazeWall UpperWall, LowerWall, LeftWall, RightWall;
 
     public void MakePath()
     {
         IsPath = true;
-        Inside.SetActive(false);
+    }
+
+    public void ResetBlock()
+    {
+        IsPath = false;
+        
+        UpperWall.ResetWall();
+        LowerWall.ResetWall();
+        LeftWall.ResetWall();
+        RightWall.ResetWall();
     }
 
     public void RemoveUpperWall()
     {
-        if (!UpperWall.IsDestroyed())
-        {
-            Destroy(UpperWall);
-        }
-
-        if (!LowerWall.IsDestroyed())
-        {
-            LowerWall.SetActive(true);
-        }
-
-        if (!LeftWall.IsDestroyed())
-        {
-            LeftWall.SetActive(true);
-        }
-
-        if (!RightWall.IsDestroyed())
-        {
-            RightWall.SetActive(true);
-        }
+        UpperWall.DisabledByPath = true;
+        UpperWall.DisableWall();
+        LowerWall.DisableWall();
+        LeftWall.DisableWall();
+        RightWall.DisableWall();
     }
 
     public void RemoveLowerWall()
     {
-        if (!LowerWall.IsDestroyed())
-        {
-            Destroy(LowerWall);
-        }
-
-        if (!UpperWall.IsDestroyed())
-        {
-            UpperWall.SetActive(true);
-        }
-
-        if (!LeftWall.IsDestroyed())
-        {
-            LeftWall.SetActive(true);
-        }
-
-        if (!RightWall.IsDestroyed())
-        {
-            RightWall.SetActive(true);
-        }
+        LowerWall.DisabledByPath = true;
+        UpperWall.DisableWall();
+        LowerWall.DisableWall();
+        LeftWall.DisableWall();
+        RightWall.DisableWall();
     }
 
     public void RemoveLeftWall()
     {
-        if (!LeftWall.IsDestroyed())
-        {
-            Destroy(LeftWall);
-        }
-
-        if (!LowerWall.IsDestroyed())
-        {
-            LowerWall.SetActive(true);
-        }
-
-        if (!UpperWall.IsDestroyed())
-        {
-            UpperWall.SetActive(true);
-        }
-
-        if (!RightWall.IsDestroyed())
-        {
-            RightWall.SetActive(true);
-        }
+        LeftWall.DisabledByPath = true;
+        UpperWall.DisableWall();
+        LowerWall.DisableWall();
+        LeftWall.DisableWall();
+        RightWall.DisableWall();
     }
 
     public void RemoveRightWall()
     {
-        if (!RightWall.IsDestroyed())
-        {
-            Destroy(RightWall);
-        }
-
-        if (!LowerWall.IsDestroyed())
-        {
-            LowerWall.SetActive(true);
-        }
-
-        if (!UpperWall.IsDestroyed())
-        {
-            UpperWall.SetActive(true);
-        }
-
-        if (!LeftWall.IsDestroyed())
-        {
-            LeftWall.SetActive(true);
-        }
+        RightWall.DisabledByPath = true;
+        UpperWall.DisableWall();
+        LowerWall.DisableWall();
+        LeftWall.DisableWall();
+        RightWall.DisableWall();
     }
 }
