@@ -5,11 +5,7 @@ public class MazeUIEvents : MonoBehaviour
 {
     [SerializeField]
     private MazeSpawner mazeSpawner;
-
-
-    [Header("Events")]
-    public GameEvent onSwitchFlight;
-
+    
     
     private UIDocument document;
 

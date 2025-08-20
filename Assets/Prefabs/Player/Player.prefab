@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 2787391092630951895}
   - component: {fileID: 4407776704456504573}
   - component: {fileID: 9100167245224549460}
-  - component: {fileID: 8144566661801339451}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -84,29 +83,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &8144566661801339451
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3036617919758550402}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6433657000109223137
 GameObject:
   m_ObjectHideFlags: 0
@@ -120,6 +96,7 @@ GameObject:
   - component: {fileID: 3176374185095508908}
   - component: {fileID: 4483537102855145633}
   - component: {fileID: 689535141159084483}
+  - component: {fileID: 8640887004709626710}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -174,7 +151,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.09
-  far clip plane: 1000
+  far clip plane: 250
   field of view: 61
   orthographic: 0
   orthographic size: 5
@@ -259,6 +236,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sensX: 400
   sensY: 400
+--- !u!114 &8640887004709626710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6433657000109223137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f201c39de1c7bd4ba1a6a65a790a1d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: b19613c781cd94445b3c46b3f69f3e7a, type: 2}
+  onEventTriggered:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 689535141159084483}
+        m_TargetAssemblyTypeName: PlayerLook, Assembly-CSharp
+        m_MethodName: OnMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7949959505819302759
 GameObject:
   m_ObjectHideFlags: 0
@@ -271,6 +276,7 @@ GameObject:
   - component: {fileID: 3272417121260495489}
   - component: {fileID: 5953867345697831743}
   - component: {fileID: 3901979858727556397}
+  - component: {fileID: 9079538634364597980}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -389,6 +395,38 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: bdc38185-cce6-4c6b-9baf-51bfc81efb04
     m_ActionName: Player/Menu[/Keyboard/tab]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5953867345697831743}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnClick
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: d162e945-d657-423f-8e79-2518cc3d9463
+    m_ActionName: Player/Fire[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5953867345697831743}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnSwitchFlight
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 9c3ce199-dddd-4cb5-a04c-1281987246c7
+    m_ActionName: Player/Fly[/Keyboard/v]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -406,11 +444,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8fe4591bdc38a640afe667e5a9f53d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraOrientation: {fileID: 6945527178873790263}
+  mazeWalls:
+    serializedVersion: 2
+    m_Bits: 64
   walkSpeed: 25
   runSpeed: 40
-  cameraOrientation: {fileID: 6945527178873790263}
-  playerLook: {fileID: 689535141159084483}
-  rb: {fileID: 3901979858727556397}
+  onMenu: {fileID: 11400000, guid: b19613c781cd94445b3c46b3f69f3e7a, type: 2}
 --- !u!54 &3901979858727556397
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -437,4 +477,27 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
+--- !u!136 &9079538634364597980
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7949959505819302759}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Radius: 0.58
+  m_Height: 2.2874584
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}

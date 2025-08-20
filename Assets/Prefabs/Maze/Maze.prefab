@@ -15,7 +15,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &2289906495793543394
 Transform:
@@ -44,7 +44,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85ddbcf7c72ca1d4bbd252c727172973, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MazeBlock: {fileID: 2376976952882556452, guid: e18c028629c152b4f92ae18a1ce659f6,
+  columns: 2
+  rows: 2
+  maxColumns: 250
+  maxRows: 250
+  mazeParent: {fileID: -1471834569313862082}
+  mazeBlock: {fileID: -3296095985661353616, guid: e18c028629c152b4f92ae18a1ce659f6,
     type: 3}
-  Columns: 8
-  Rows: 8
+  mazeUIEvents: {fileID: 0}

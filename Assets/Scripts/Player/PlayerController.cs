@@ -1,6 +1,7 @@
 using System.Data;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
@@ -23,6 +24,8 @@ public class PlayerController : MonoBehaviour
     [Header("Events")]
     public GameEvent onMenu;
 
+
+    private CapsuleCollider capsuleCollider;
 
     private Rigidbody rb;
 
@@ -58,6 +61,8 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
 
+        capsuleCollider = GetComponent<CapsuleCollider>();
+        
         ray = new Ray(Vector3.zero, Vector3.forward);
 
         moveSpeed = walkSpeed;
@@ -137,16 +142,13 @@ public class PlayerController : MonoBehaviour
             {
                 hit.transform.gameObject.SetActive(false);
             }
-
-            if (Physics.Raycast(ray, out hit, 100f, mazeWalls))
-            {
-                hit.transform.gameObject.SetActive(false);
-            }
         }
     }
 
-    public void OnSwitchFlight()
+    public void OnSwitchFlight(InputAction.CallbackContext context)
     {
         rb.useGravity = !rb.useGravity;
+
+        capsuleCollider.enabled = !capsuleCollider.enabled;
     }
 }

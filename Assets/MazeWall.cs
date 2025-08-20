@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(BoxCollider))]
+[RequireComponent(typeof(MeshRenderer))]
 public class MazeWall : MonoBehaviour
 {
     public bool DisabledByPath = false;
