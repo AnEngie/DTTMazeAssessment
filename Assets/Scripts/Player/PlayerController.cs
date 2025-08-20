@@ -40,20 +40,9 @@ public class PlayerController : MonoBehaviour
 
     private RaycastHit hitInfo;
 
+    private bool noclip = false;
 
-    private bool _isJumping = false;
-
-    private bool IsJumping
-    {
-        get
-        {
-            return _isJumping;
-        }
-        set
-        {
-            _isJumping = value;
-        }
-    }
+    private bool isJumping = false;
 
     private bool IsCursorVisible = false;
 
@@ -77,7 +66,7 @@ public class PlayerController : MonoBehaviour
         rb.AddForce(moveDirection.normalized * moveSpeed, ForceMode.Force);
 
         // Movement on the Y axis
-        if (IsJumping)
+        if (isJumping && noclip)
         {
             rb.AddForce(transform.up * moveSpeed, ForceMode.Force);
         }
@@ -105,12 +94,12 @@ public class PlayerController : MonoBehaviour
     {
         if (context.started)
         {
-            IsJumping = true;
+            isJumping = true;
             rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z); // reset Y velocity before moving up
         }
         else if (context.canceled)
         {
-            IsJumping = false;
+            isJumping = false;
         }
     }
 
@@ -169,5 +158,7 @@ public class PlayerController : MonoBehaviour
         rb.useGravity = !rb.useGravity;
 
         capsuleCollider.enabled = !capsuleCollider.enabled;
+
+        noclip = !noclip;
     }
 }

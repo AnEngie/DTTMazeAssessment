@@ -25,9 +25,6 @@ public class MazeSpawner : MonoBehaviour
     [SerializeField]
     private MazeUIEvents mazeUIEvents;
 
-    [Header("Events")]
-    public GameEvent OnLoaded;
-
 
     private MazeBlock[,] MazeGrid;
 
@@ -56,15 +53,10 @@ public class MazeSpawner : MonoBehaviour
                 StaticBatchingUtility.Combine(MazeGrid[i, j].gameObject); // Batch Game Objects with same materials together for better performance
             }
         }
-
-        OnLoaded.TriggerEvent();
     }
 
     public void StartMazeGeneration()
     {
-        mazeUIEvents.ActiveProgressBar(columns * rows);
-        progress = 0;
-
         if (MazeGenerated) // Reset the maze back before generating again
         {
             ResetMaze();
@@ -72,22 +64,19 @@ public class MazeSpawner : MonoBehaviour
             MazeGenerated = false;
         }
 
-        StartCoroutine(GenerateMaze());
-    }
-
-    private IEnumerator GenerateMaze()
-    {
-        // When Algorithm is done generate entrance and exit
-
-        yield return StartAlgorithm(null, MazeGrid[0, 0]);
-
+        // Open the maze
         MazeGrid[0, 0].RemoveWall((int)WallTypes.LeftWall);
         MazeGrid[0, 0].RemoveWall((int)WallTypes.LowerWall);
 
         MazeGenerated = true;
+
+        mazeUIEvents.ActiveProgressBar(columns * rows);
+        progress = 0;
+
+        StartCoroutine(GenerateMaze(null, MazeGrid[0, 0]));
     }
 
-    private IEnumerator StartAlgorithm(MazeBlock previousBlock, MazeBlock currentBlock)
+    private IEnumerator GenerateMaze(MazeBlock previousBlock, MazeBlock currentBlock)
     {
         currentBlock.MakePath(); // Mark block as visited by algorithm
 
@@ -104,7 +93,7 @@ public class MazeSpawner : MonoBehaviour
                 progress++;
                 mazeUIEvents.UpdateProgressBar(progress);
 
-                yield return StartAlgorithm(currentBlock, nextBlock);
+                yield return GenerateMaze(currentBlock, nextBlock);
 
             }
         } while (nextBlock != null); // Makes algorithm visit older blocks when path hits dead end

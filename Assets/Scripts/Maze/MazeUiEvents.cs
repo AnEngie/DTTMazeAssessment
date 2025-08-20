@@ -59,7 +59,6 @@ public class MazeUIEvents : MonoBehaviour
         mazeSpawner.columns = columnsField.value;
         mazeSpawner.rows = rowField.value;
 
-        Debug.Log("Start Maze Generation");
         mazeSpawner.StartMazeGeneration();
     }
 
