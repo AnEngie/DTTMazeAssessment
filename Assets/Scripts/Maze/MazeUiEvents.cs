@@ -64,20 +64,24 @@ public class MazeUIEvents : MonoBehaviour
 
         mazeSpawner.columns = GridColumnsField.value;
         mazeSpawner.rows = GridRowField.value;
-        mazeSpawner.GenerateGrid();
+        mazeSpawner.StartMazeGeneration();
     }
 
     private void OnGenerateMazeClick(ClickEvent evt)
     {
+        
+        GenerateMazeButton.SetEnabled(true);
+        DestroyGridButton.SetEnabled(true);
+
+        mazeSpawner.columns = GridColumnsField.value;
+        mazeSpawner.rows = GridRowField.value;
+        
         mazeSpawner.StartMazeGeneration();
     }
 
     private void OnDestroyGridClick(ClickEvent evt)
     {
-        GenerateMazeButton.SetEnabled(false);
-        DestroyGridButton.SetEnabled(false);
-
-        mazeSpawner.RemoveGrid();
+        
     }
 
     private void OnSwitchFlightClick(ClickEvent evt)
@@ -87,6 +91,8 @@ public class MazeUIEvents : MonoBehaviour
 
     public void ActiveProgressBar(int maxValue)
     {
+        Debug.Log(maxValue);
+        
         progressBar.highValue = maxValue;
         progressBar.visible = true;
     }

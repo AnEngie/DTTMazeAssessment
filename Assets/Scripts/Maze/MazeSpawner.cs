@@ -26,66 +26,41 @@ public class MazeSpawner : MonoBehaviour
 
     private int progress = 0;
 
-    public void GenerateGrid()
-    {
-        if (MazeGrid != null)
-        {
-            RemoveGrid();
-        }
 
+    public void StartMazeGeneration()
+    {
         MazeGrid ??= new MazeBlock[columns, rows];
 
+        mazeUIEvents.ActiveProgressBar(MazeGrid.Length - 1);
+        progress = 0;
+
+        GenerateGrid(columns, rows);
+
+        MazeGenerated = true;
+    }
+
+    private void GenerateGrid(int columns, int rows)
+    {
         for (int i = 0; i < columns; i++) // Generate grid size to its given size
         {
             for (int j = 0; j < rows; j++)
             {
                 Vector3 blockPos = new(i, 0, j);
                 MazeGrid[i, j] = Instantiate(mazeBlock, blockPos, Quaternion.identity, mazeParent.transform);
+
                 StaticBatchingUtility.Combine(MazeGrid[i, j].gameObject);
             }
         }
+
+        StartCoroutine(GenerateMaze(null, MazeGrid[0, 0]));  // Start generating paths in grid
     }
 
-    public void RemoveGrid()
-    {
-        if (MazeGrid != null)
-        {
-            for (int i = 0; i < columns; i++) // Generate grid size to its given size
-            {
-                for (int j = 0; j < rows; j++)
-                {
-                    MazeGrid[i, j].gameObject.SetActive(false);
-                }
-            }
-
-            MazeGrid = null;
-            MazeGenerated = false;
-        }
-    }
-
-    public void StartMazeGeneration()
-    {
-        if (MazeGenerated)
-        {
-            RemoveGrid();
-            GenerateGrid();
-        }
-
-        mazeUIEvents.ActiveProgressBar(MazeGrid.Length - 1);
-        progress = 0;
-
-        StartCoroutine(GenerateMaze(null, MazeGrid[0, 0])); // Start generating paths in grid
-
-        MazeGenerated = true;
-    }
 
     private IEnumerator GenerateMaze(MazeBlock previousBlock, MazeBlock currentBlock)
     {
         currentBlock.MakePath(); // Mark block as visited by algorithm
 
         RemoveWall(previousBlock, currentBlock);
-
-        yield return new WaitForSeconds(mazeGenerationDelay);
 
         MazeBlock nextBlock;
 
@@ -97,6 +72,7 @@ public class MazeSpawner : MonoBehaviour
             {
                 progress++;
                 mazeUIEvents.UpdateProgressBar(progress);
+                Debug.Log(progress);
 
                 yield return GenerateMaze(currentBlock, nextBlock);
             }
