@@ -393,10 +393,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 7961171900647667225}
-  - {fileID: 1391761120563457204}
-  - {fileID: 7224020521923681404}
   - {fileID: 3307644914079529090}
+  - {fileID: 7224020521923681404}
+  - {fileID: 1391761120563457204}
+  - {fileID: 7961171900647667225}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &-3296095985661353616
@@ -415,6 +415,11 @@ MonoBehaviour:
   LowerWall: {fileID: 6993676149502197886}
   LeftWall: {fileID: 6283949167191093765}
   RightWall: {fileID: 1600980261869957722}
+  mazeWalls:
+  - {fileID: 1939415894785650809}
+  - {fileID: 6993676149502197886}
+  - {fileID: 6283949167191093765}
+  - {fileID: 1600980261869957722}
 --- !u!1 &7227941862066078044
 GameObject:
   m_ObjectHideFlags: 0

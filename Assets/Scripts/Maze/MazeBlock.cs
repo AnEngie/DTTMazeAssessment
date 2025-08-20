@@ -1,8 +1,4 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class MazeBlock : MonoBehaviour
@@ -10,7 +6,7 @@ public class MazeBlock : MonoBehaviour
     public bool IsPath { get; private set; }
 
     [SerializeField]
-    private MazeWall UpperWall, LowerWall, LeftWall, RightWall;
+    private List<MazeWall> mazeWalls;
 
     public void MakePath()
     {
@@ -21,33 +17,19 @@ public class MazeBlock : MonoBehaviour
     {
         IsPath = false;
 
-        UpperWall.ResetWall();
-        LowerWall.ResetWall();
-        LeftWall.ResetWall();
-        RightWall.ResetWall();
+        foreach (var wallType in mazeWalls)
+        {
+            wallType.ResetWall();
+        }
     }
 
-    public void RemoveWall(int WallNumber)
+    public void RemoveWall(int wall)
     {
-        switch (WallNumber)
-        {
-            case 1:
-                UpperWall.DisabledByPath = true;
-                break;
-            case 2:
-                LowerWall.DisabledByPath = true;
-                break;
-            case 3:
-                LeftWall.DisabledByPath = true;
-                break;
-            case 4:
-                RightWall.DisabledByPath = true;
-                break;
-        }
+        mazeWalls[wall].DisabledByPath = true;
 
-        UpperWall.DisableWall();
-        LowerWall.DisableWall();
-        LeftWall.DisableWall();
-        RightWall.DisableWall();
+        foreach (var wallType in mazeWalls)
+        {
+            wallType.DisableWall();
+        }
     }
 }

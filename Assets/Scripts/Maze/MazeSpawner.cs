@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MazeSpawner : MonoBehaviour
 {
-    public int columns = 2, rows = 2;
+    public int columns = 10, rows = 10;
 
     [SerializeField]
     private int maxColumns = 250, maxRows = 250;
@@ -15,6 +15,15 @@ public class MazeSpawner : MonoBehaviour
     [SerializeField]
     private MazeBlock mazeBlock;
 
+    private enum WallTypes // The different types of wall that can be disabled
+    {
+        UpperWall,
+        LowerWall,
+        LeftWall,
+        RightWall
+    };
+
+    [Header("Events")]
     [SerializeField]
     private MazeUIEvents mazeUIEvents;
 
@@ -27,6 +36,8 @@ public class MazeSpawner : MonoBehaviour
 
     void Start()
     {
+        // Pre-generate Grid as to reduce lag when big mazes are requested
+        
         MazeGrid = new MazeBlock[maxColumns, maxRows];
 
         GenerateGrid(maxColumns, maxRows);
@@ -41,7 +52,7 @@ public class MazeSpawner : MonoBehaviour
                 Vector3 blockPos = new(i, 0, j);
                 MazeGrid[i, j] = Instantiate(mazeBlock, blockPos, Quaternion.identity, mazeParent.transform);
 
-                StaticBatchingUtility.Combine(MazeGrid[i, j].gameObject);
+                StaticBatchingUtility.Combine(MazeGrid[i, j].gameObject); // Batch Game Objects with same materials together for better performance
             }
         }
     }
@@ -51,28 +62,26 @@ public class MazeSpawner : MonoBehaviour
         mazeUIEvents.ActiveProgressBar(columns * rows);
         progress = 0;
 
-        if (MazeGenerated)
+        if (MazeGenerated) // Reset the maze back before generating again
         {
-            Debug.Log("Stop Maze Generation");
             ResetMaze();
             
             MazeGenerated = false;
         }
 
-        Debug.Log("Maze Generation Started");
         MazeGenerated = true;
         StartCoroutine(GenerateMaze(null, MazeGrid[0, 0]));  // Start generating paths in grid
     }
 
     private void ResetMaze()
     {
-        StopAllCoroutines();
+        StopAllCoroutines(); // Stop Maze Generation coroutine if it was active
 
         for (int i = 0; i < maxColumns; i++) // Generate grid size to its given size
         {
             for (int j = 0; j < maxRows; j++)
             {
-                MazeGrid[i, j].ResetBlock();
+                MazeGrid[i, j].ResetBlock(); // Set Mesh renderer and box collider to unactive
             }
         }
     }
@@ -81,7 +90,7 @@ public class MazeSpawner : MonoBehaviour
     {
         currentBlock.MakePath(); // Mark block as visited by algorithm
 
-        RemoveWall(previousBlock, currentBlock);
+        RemoveWall(previousBlock, currentBlock); // Remove walls between the 2 blocks
 
         MazeBlock nextBlock;
 
@@ -108,31 +117,30 @@ public class MazeSpawner : MonoBehaviour
 
         if (previousBlock.transform.position.x < currentBlock.transform.position.x)
         {
-            previousBlock.RemoveWall(4);
-            currentBlock.RemoveWall(3);
+            previousBlock.RemoveWall((int)WallTypes.RightWall);
+            currentBlock.RemoveWall((int)WallTypes.LeftWall);
             return;
         }
 
         if (previousBlock.transform.position.x > currentBlock.transform.position.x)
         {
-            previousBlock.RemoveWall(3);
-            currentBlock.RemoveWall(4);
+            previousBlock.RemoveWall((int)WallTypes.LeftWall);
+            currentBlock.RemoveWall((int)WallTypes.RightWall);
             return;
         }
 
         if (previousBlock.transform.position.z < currentBlock.transform.position.z)
         {
-            previousBlock.RemoveWall(1);
-            currentBlock.RemoveWall(2);
+            previousBlock.RemoveWall((int)WallTypes.UpperWall);
+            currentBlock.RemoveWall((int)WallTypes.LowerWall);
             return;
         }
 
 
         if (previousBlock.transform.position.z > currentBlock.transform.position.z)
         {
-            previousBlock.RemoveWall(2);
-            currentBlock.RemoveWall(1);
-            return;
+            previousBlock.RemoveWall((int)WallTypes.LowerWall);
+            currentBlock.RemoveWall((int)WallTypes.UpperWall);
         }
     }
 

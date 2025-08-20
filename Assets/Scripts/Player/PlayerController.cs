@@ -1,7 +1,5 @@
-using System.Data;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
