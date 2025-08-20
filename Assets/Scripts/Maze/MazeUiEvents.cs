@@ -62,8 +62,8 @@ public class MazeUIEvents : MonoBehaviour
         GenerateMazeButton.SetEnabled(true);
         DestroyGridButton.SetEnabled(true);
 
-        mazeSpawner.Columns = GridColumnsField.value;
-        mazeSpawner.Rows = GridRowField.value;
+        mazeSpawner.columns = GridColumnsField.value;
+        mazeSpawner.rows = GridRowField.value;
         mazeSpawner.GenerateGrid();
     }
 

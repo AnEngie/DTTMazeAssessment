@@ -1,11 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class MazeSpawner : MonoBehaviour
 {
-    public int Columns = 2, Rows = 2;
+    public int columns = 2, rows = 2;
 
 
     [SerializeField]
@@ -27,7 +26,6 @@ public class MazeSpawner : MonoBehaviour
 
     private int progress = 0;
 
-
     public void GenerateGrid()
     {
         if (MazeGrid != null)
@@ -35,13 +33,14 @@ public class MazeSpawner : MonoBehaviour
             RemoveGrid();
         }
 
-        MazeGrid ??= new MazeBlock[Columns, Rows];
+        MazeGrid ??= new MazeBlock[columns, rows];
 
-        for (int i = 0; i < Columns; i++) // Generate grid size to its given size
+        for (int i = 0; i < columns; i++) // Generate grid size to its given size
         {
-            for (int j = 0; j < Rows; j++)
+            for (int j = 0; j < rows; j++)
             {
-                MazeGrid[i, j] = Instantiate(mazeBlock, new Vector3(i, 0, j), Quaternion.identity, mazeParent.transform);
+                Vector3 blockPos = new(i, 0, j);
+                MazeGrid[i, j] = Instantiate(mazeBlock, blockPos, Quaternion.identity, mazeParent.transform);
                 StaticBatchingUtility.Combine(MazeGrid[i, j].gameObject);
             }
         }
@@ -51,11 +50,11 @@ public class MazeSpawner : MonoBehaviour
     {
         if (MazeGrid != null)
         {
-            for (int i = 0; i < Columns; i++) // Generate grid size to its given size
+            for (int i = 0; i < columns; i++) // Generate grid size to its given size
             {
-                for (int j = 0; j < Rows; j++)
+                for (int j = 0; j < rows; j++)
                 {
-                    Destroy(MazeGrid[i, j].gameObject);
+                    MazeGrid[i, j].gameObject.SetActive(false);
                 }
             }
 
@@ -160,9 +159,10 @@ public class MazeSpawner : MonoBehaviour
     {
         int x = (int)currentBlock.transform.position.x;
         int z = (int)currentBlock.transform.position.z;
+
         List<MazeBlock> unvisitedNeighbours = new();
 
-        if (x + 1 < Columns) // Check if coords are inside grid
+        if (x + 1 < columns) // Check if coords are inside grid
         {
             var blockRight = MazeGrid[x + 1, z];
 
@@ -182,7 +182,7 @@ public class MazeSpawner : MonoBehaviour
             }
         }
 
-        if (z + 1 < Rows) // Check if coords are inside grid
+        if (z + 1 < rows) // Check if coords are inside grid
         {
             var blockUp = MazeGrid[x, z + 1];
 
