@@ -48,7 +48,7 @@ public class MazeSpawner : MonoBehaviour
 
     public void StartMazeGeneration()
     {
-        mazeUIEvents.ActiveProgressBar(MazeGrid.Length - 1);
+        mazeUIEvents.ActiveProgressBar(columns * rows);
         progress = 0;
 
         if (MazeGenerated)
@@ -108,31 +108,30 @@ public class MazeSpawner : MonoBehaviour
 
         if (previousBlock.transform.position.x < currentBlock.transform.position.x)
         {
-            previousBlock.RemoveRightWall();
-            currentBlock.RemoveLeftWall();
+            previousBlock.RemoveWall(4);
+            currentBlock.RemoveWall(3);
             return;
         }
 
         if (previousBlock.transform.position.x > currentBlock.transform.position.x)
         {
-            previousBlock.RemoveLeftWall();
-            currentBlock.RemoveRightWall();
+            previousBlock.RemoveWall(3);
+            currentBlock.RemoveWall(4);
             return;
         }
 
-
         if (previousBlock.transform.position.z < currentBlock.transform.position.z)
         {
-            previousBlock.RemoveUpperWall();
-            currentBlock.RemoveLowerWall();
+            previousBlock.RemoveWall(1);
+            currentBlock.RemoveWall(2);
             return;
         }
 
 
         if (previousBlock.transform.position.z > currentBlock.transform.position.z)
         {
-            previousBlock.RemoveLowerWall();
-            currentBlock.RemoveUpperWall();
+            previousBlock.RemoveWall(2);
+            currentBlock.RemoveWall(1);
             return;
         }
     }

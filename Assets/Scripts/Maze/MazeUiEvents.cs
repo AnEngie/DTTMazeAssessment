@@ -54,7 +54,7 @@ public class MazeUIEvents : MonoBehaviour
 
     public void ActiveProgressBar(int maxValue)
     {
-        progressBar.highValue = maxValue;
+        progressBar.highValue = maxValue - 1;
         progressBar.visible = true;
     }
 
@@ -62,7 +62,7 @@ public class MazeUIEvents : MonoBehaviour
     {
         progressBar.value = progress;
 
-        if (progressBar.value == progressBar.highValue)
+        if (progressBar.value >= progressBar.highValue)
         {
             progressBar.visible = false;
         }
